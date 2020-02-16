@@ -1,7 +1,7 @@
 ##### Fiap - Soluções em Redes para ambientes Linux
 profhelder.pereira@fiap.com.br
 
-![alt tag](https://raw.githubusercontent.com/wiki/fiapsistemaslinux/SysOps/images/SSH_putty.png)
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SSH_putty.png)
 Imagem de <a href="https://pixabay.com/pt/users/mikex7-1209336/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3678638">mikex7</a> por <a href="https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=3678638">Pixabay</a>
 
 ---
@@ -102,6 +102,7 @@ Uma das opções em relação a acesso remoto a partir de ambientes windows é a
 O putty é um executável, por isso não é preciso efetuar a instalação, ao abrir a aplicação preencha os campos “Host Name”  e Port com os nomes do host e da porta do servidor onde pretende efetuar a conexão:
 
 ![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SSH_runputty-1.png)
+
 
 > Geralmente o ssh utiliza a porta 22 como porta padrão porém qualquer porta acima de 1024 também poderá ser usada.
 
