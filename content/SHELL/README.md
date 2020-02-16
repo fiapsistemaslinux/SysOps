@@ -137,7 +137,7 @@ Além dos arquivos que definem regras de Environment para todo o sistema existem
 
 A tabela abaixo apresenta uma relação desses arquivos e sua descrição:
 
-![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SHEEL_startupfiles.png)
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SHELL_startupfiles.png)
 
 Essa segunda relação refere-se aos startup files de usuários que não são diretamente ligados a um login de sessão:
 
