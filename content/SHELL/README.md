@@ -141,7 +141,7 @@ A tabela abaixo apresenta uma relação desses arquivos e sua descrição:
 
 Essa segunda relação refere-se aos startup files de usuários que não são diretamente ligados a um login de sessão:
 
-![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SHEEL_nologinstartupfiles.png)
+[[images/SHEEL_nologinstartupfiles.PNG]]
 
 
 ## Aliases de Comandos:
