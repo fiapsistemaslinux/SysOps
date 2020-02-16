@@ -1,7 +1,8 @@
 ##### Fiap - Soluções em Redes para ambientes Linux
 profhelder.pereira@fiap.com.br
 
-![alt tag](https://raw.githubusercontent.com/wiki/fiapsistemaslinux/SysOps/images/SHELL_desc.png)
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SHELL_desc.jpg)
+
 Imagem de <a href="https://pixabay.com/pt/users/cocoparisienne-127419/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1847458">cocoparisienne</a> por <a href="https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1847458">Pixabay</a>
 
 ---
@@ -17,7 +18,7 @@ O terminal de comandos Linux é responsável por interpretar tarefas e traduzi-l
 
 No mesmo artigo Jones descreve a arquitetura base de uma shell fazendo analogia com um canal, com recebimento de entrada, interpretação e execução de comandos, o que faz sentido pois é a partir da shell que as intruções são convertidas em chamadas dentro do sistema operacional conforme o modelo abaixo:
 
-[[images/SHELL_archtecture.png]]
+[[master/images/SHELL_archtecture.png]]
 
 
 ## Executando comandos e entendendo o Environment:
@@ -111,7 +112,7 @@ Além do printenv outra opção de exibição é o uso do comando "set", este co
 
 A lista abaixo foi extraida do Manual "The Linux command Line" e possui uma relação de algumas das variaveis de ambiente mais relevantes para o sysadmin:
 
-[[images/SHELL_variableslist.png]] 
+[[master/images/SHELL_variableslist.png]] 
 
 
 ## Como as configurações de um Environment são geradas?
@@ -137,11 +138,11 @@ Além dos arquivos que definem regras de Environment para todo o sistema existem
 
 A tabela abaixo apresenta uma relação desses arquivos e sua descrição:
 
-[[images/SHEEL_startupfiles.png]]
+[[master/images/SHEEL_startupfiles.png]]
 
 Essa segunda relação refere-se aos startup files de usuários que não são diretamente ligados a um login de sessão:
 
-[[images/SHEEL_nologinstartupfiles.png]]
+[[master/images/SHEEL_nologinstartupfiles.png]]
 
 
 ## Aliases de Comandos:
