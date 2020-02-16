@@ -101,13 +101,13 @@ Uma das opções em relação a acesso remoto a partir de ambientes windows é a
 
 O putty é um executável, por isso não é preciso efetuar a instalação, ao abrir a aplicação preencha os campos “Host Name”  e Port com os nomes do host e da porta do servidor onde pretende efetuar a conexão:
 
-[[images/SSH_runputty-1.png]]
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SSH_runputty-1.png)
 
 > Geralmente o ssh utiliza a porta 22 como porta padrão porém qualquer porta acima de 1024 também poderá ser usada.
 
 No primeiro acesso você verá a tela ao lado, sempre que ouver uma primeira tentativa de acesso será solicitado que você aceite a identificação do servidor, informação que será armazenada em uma base de dados com o nome dos hosts conhecidos, ou seja, dos endereços que já acessou, clique em “sim” para que essa identificação ocorra.
 
-[[images/SSH_runputty-2.png]]
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SSH_runputty-2.png)
 
 ---
 
@@ -115,7 +115,7 @@ No primeiro acesso você verá a tela ao lado, sempre que ouver uma primeira ten
 
 Uma solução para acesso remoto via windows derivada do putty, é o Bitvise, este é com certeza uma ferramenta útil principalmente por não se limitar apenas a fornecer sessões de login no terminal e permitir também a trasnferẽncia de arquivos, o bitvise pode ser obtido no mesmo endereço do [putty](http://www.putty.org);
 
-[[images/SSH_bitvise.png]]
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SSH_bitvise.png)
 
 ---
 
@@ -123,7 +123,7 @@ Uma solução para acesso remoto via windows derivada do putty, é o Bitvise, es
 
 A partir da versão 10 o Windows passou a oferecer o pacote OpenSSH client mesmo projeto utilizado para acesso remoto a partir de um ambiente Linux, o que facilitou muito o acesso e gestão de configuração principalmente para usuários já habituados ao modelo utilizado em Linux;
 
-[[images/SSH_usingpowershell.png]]
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SSH_usingpowershell.png)
 
 
 ---
@@ -271,13 +271,13 @@ Uma boa dica para garantir boa parte dessas configurações, princiaplmente aque
 * [Salt](https://saltstack.com/);
 * [Ansible](https://www.ansible.com/);
 
-[[images/SSH_automation.png]]
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SSH_automation.png)
 
 Todas essas soluções possuem recursos especificos para lidar com a entrega de chaves e configurações de acesso remoto.
 
 ---
 
-[[images/SSH_google.png]]
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SSH_google.png)
 Imagem de <a href="https://pixabay.com/pt/users/ElisaRiva-1348268/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1991840">ElisaRiva</a> por <a href="https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1991840">Pixabay</a>
 
 ### Usando TFA com Google Authenticator
@@ -332,7 +332,7 @@ Já essa DOC da plataforma de Cloud Linode demonstra o mesmo principio utilizand
 
 # Off Topic: Como funciona a verificação de Fingerprint?
 
-[[images/SSH_fingerprint.png]]
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SSH_fingerprint.png)
 Imagem de <a href="https://pixabay.com/pt/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=146242">OpenClipart-Vectors</a> por <a href="https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=146242">Pixabay</a>
 
 O fingerprint exibido na primeira conexão SSH é uma chave gerada utilizando um algoritmo de hash com base no servidor de destino, essa verificação ocorre após o handshake no momento em que a comunicação já foi estabelecida.
