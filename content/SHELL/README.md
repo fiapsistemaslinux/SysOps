@@ -18,8 +18,7 @@ O terminal de comandos Linux é responsável por interpretar tarefas e traduzi-l
 
 No mesmo artigo Jones descreve a arquitetura base de uma shell fazendo analogia com um canal, com recebimento de entrada, interpretação e execução de comandos, o que faz sentido pois é a partir da shell que as intruções são convertidas em chamadas dentro do sistema operacional conforme o modelo abaixo:
 
-[[master/images/SHELL_archtecture.png]]
-
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SHELL_archtecture.png)
 
 ## Executando comandos e entendendo o Environment:
 
@@ -112,7 +111,7 @@ Além do printenv outra opção de exibição é o uso do comando "set", este co
 
 A lista abaixo foi extraida do Manual "The Linux command Line" e possui uma relação de algumas das variaveis de ambiente mais relevantes para o sysadmin:
 
-[[master/images/SHELL_variableslist.png]] 
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SHELL_variableslist.png)
 
 
 ## Como as configurações de um Environment são geradas?
@@ -138,11 +137,11 @@ Além dos arquivos que definem regras de Environment para todo o sistema existem
 
 A tabela abaixo apresenta uma relação desses arquivos e sua descrição:
 
-[[master/images/SHEEL_startupfiles.png]]
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SHEEL_startupfiles.png)
 
 Essa segunda relação refere-se aos startup files de usuários que não são diretamente ligados a um login de sessão:
 
-[[master/images/SHEEL_nologinstartupfiles.png]]
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/SHEEL_nologinstartupfiles.png)
 
 
 ## Aliases de Comandos:
