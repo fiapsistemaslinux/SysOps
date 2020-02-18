@@ -12,10 +12,6 @@ Neste LAB algumas funções relacionadas a gerenciamento de acessos e customiza�
 **Objetivo:**
 Customizar o histórico e as informações que aparecem no banner de autenticação em um terminal linux
 
-**Conteúdo Abordado**
-- [SHEEL e Environment Linux]();
-- [Básico sobre editores de Texto]();
-
 ---
 
 ## 1. Customizando o histórico com base em variavéis da SHELL
@@ -31,7 +27,7 @@ HISTFILESIZE
 
 Identifique qual a função dessas variaveis e configure o seguinte cenário:
 
-1.1 O histórico deverá possuir o formato: YYYY-MM-DD h:m:s - <Comando do Histórico>
+1.1 O histórico deverá possuir o formato: YYYY-MM-DD h:m - <Comando do Histórico>
 Por exemplo: "2020-02-16 19:15:00 - sudo apt update" 
 Esta configuração deverá ser definitiva e aplicada apenas ao usuário "root";
 
