@@ -28,7 +28,7 @@ HISTFILESIZE
 Identifique qual a função dessas variaveis e configure o seguinte cenário:
 
 1.1 O histórico deverá possuir o formato: YYYY-MM-DD h:m - <Comando do Histórico>
-Por exemplo: "2020-02-16 19:15:00 - sudo apt update" 
+Por exemplo: "2020-02-16 19:15 - sudo apt update" 
 Esta configuração deverá ser definitiva e aplicada apenas ao usuário "root";
 
 1.2 Configure o histórico com 3000 linhas de conteudo, esta configuração deve ser definitiva e aplicada a TODOS os usuários;
