@@ -7,7 +7,6 @@ profhelder.pereira@fiap.com.br
 Imagem de [Gerd Altmann](https://pixabay.com/pt/users/geralt-9301/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=773215) obtida via [Pixabay](https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=773215");
 
 # Instalando Pacotes (Configurando um servidor de conteúdo)
----
 
 Neste LAB revisaremos alguns conteúdos voltados a instalação de pacotes para configurar um servidor linux rodando Nginx implementando uma página estática de conteúdo;
 
@@ -15,7 +14,6 @@ Neste LAB revisaremos alguns conteúdos voltados a instalação de pacotes para 
 Revisitar o processo de instalação de pacotes e configuração de repositórios em ambientes GNU/Linux utilizando a  família Debian e em seguida habilitar repositório um  de terceiros para obter a versão mais recente de uma aplicação;
 
 ## 1. Atualizando os pacotes do servidor
----
 
 Após o acesso ao sistema operacional, verifique os repositórios configurados:
 
@@ -35,7 +33,6 @@ sudo apt-get upgrade
 ```
 
 ## 2. Instalação do Nginx:
----
 
 Nesta segunda etapa execute a instalação do Nginx de acordo com a versão disponível no repositório:
 
@@ -79,7 +76,6 @@ curl 127.0.0.1:80
 ```
 
 ## 3. Atualizando o repositório
----
 
 Após a instalação execute a configuração de um novo repositório, o que possibilitará obter uma versão atualizada do Nginx:
 
@@ -128,7 +124,6 @@ curl -O https://nginx.org/keys/nginx_signing.key && apt-key add ./nginx_signing.
 > Todo repositório oficial disponibiliza uma chave GPG que deve ser adicionada ao sistema operacional, no exemplo acima executamos o download dessa chave e incorporação utilizando o comando 'apt-key add';
 
 ## 4. Atualizando a aplicação
----
 
 4.1 Finalmente instale a nova versão do Nginx!
 
@@ -155,7 +150,6 @@ Imagem de [Tumisu](https://pixabay.com/pt/users/Tumisu-148124/?utm_source=link-a
 ![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/DEF_goal.png)
 
 # 5. Challenge
----
 *(Hora de popular o seu servidor de conteúdo e revisar alguns detalhes)*
 
 Nesta etapa você substituirá o conteúdo padrão exibido pelo Nginx por um conteúdo próprio customizado;
