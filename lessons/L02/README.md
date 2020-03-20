@@ -4,7 +4,7 @@ profhelder.pereira@fiap.com.br
 
 ![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/L02_beb_browsers.png)
 
-Imagem de <a href="https://pixabay.com/pt/users/geralt-9301/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=773215">Gerd Altmann</a> por <a href="https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=773215">Pixabay</a>
+Imagem de [Gerd Altmann](https://pixabay.com/pt/users/geralt-9301/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=773215) obtida via [Pixabay](https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=773215");
 ---
 
 # Instalando Pacotes (Configurando um servidor de conteúdo)
@@ -158,7 +158,9 @@ systemctl restart nginx
 # Fast Challenge: Hora de popular o seu servidor de conteúdo
 
 ![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/DEF_goal.png)
-Imagem de <a href="https://pixabay.com/pt/users/Tumisu-148124/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1955806">Tumisu</a> por <a href="https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1955806">Pixabay</a>
+
+Imagem de [Tumisu](https://pixabay.com/pt/users/Tumisu-148124/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1955806) obtida via [Pixabay](https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1955806)
+
 
 Nesta etapa você substituirá o conteúdo padrão exibido pelo Nginx por um conteúdo próprio customizado;
 
@@ -190,7 +192,9 @@ tar -xvf <path com o arquivo original>
 # QUIZ:
 
 ![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/DEF_quiz.png)
-Imagem de <a href="https://pixabay.com/pt/users/AnnCarter-162688/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2174368">Ann Carter</a> por <a href="https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2174368">Pixabay</a>
+
+Imagem de [Ann Carter](https://pixabay.com/pt/users/AnnCarter-162688/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2174368") obtida via [Pixabay](https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2174368)
+
 
 Com base no exercício que executamos responda a essa três perguntas simples neste formulário, sua resposta será utilizada como mérito na nossa avaliação semestral;
 
