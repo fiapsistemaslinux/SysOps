@@ -150,6 +150,8 @@ nginx -v
 systemctl restart nginx
 ```
 
+Imagem de [Tumisu](https://pixabay.com/pt/users/Tumisu-148124/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1955806) obtida via [Pixabay](https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1955806)
+
 ![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/DEF_goal.png)
 
 # 5. Challenge
@@ -181,7 +183,11 @@ tar -xvf <path com o arquivo original>
 
 > Embora não seja um pré-requisito neste caso, é uma boa práticar adequar as permissões do novo conteúdo de acordo com o usuário que acessa esses recursos, neste caso o usuário de sistemas nginx, não esqueça de fazer isso de forma recursiva praticando o conteúdo das aulas sobre chmod =)
 
-## Exercício:
+Imagem de [Ann Carter](https://pixabay.com/pt/users/AnnCarter-162688/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2174368") obtida via [Pixabay](https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2174368)
+
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/DEF_quiz.png)
+
+# 6. Exercício:
 
 Com base no exercício que executamos responda a essa três perguntas simples neste formulário, sua resposta será utilizada como mérito na nossa avaliação semestral;
 
