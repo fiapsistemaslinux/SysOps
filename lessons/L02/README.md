@@ -53,11 +53,14 @@ nginx -v
 # Verificando o serviço:
 sudo systemctl status nginx
 
-> Na instalação um deamon responsável por controlar um processo é criado, este controle ocorre através de um serviço implantado utilizando a solução systemd um assunto que revisaremos nas próximas aulas mas já está nos anexos do nosso material de apoio;
-
-**Finalmente acesse a página default criada após a instalação pelo navegador Web**
+> Na instalação um deamon responsável por controlar um processo é criado, 
+este controle ocorre através de um serviço implantado utilizando a solução 
+systemd um assunto que revisaremos nas próximas aulas mas já está nos anexos 
+do nosso material de apoio;
 
 ```
+
+**Finalmente acesse a página default criada após a instalação pelo navegador Web**
 
 ## 2.1 Detalhes importantes do processo
 
@@ -118,7 +121,8 @@ N: See apt-secure(8) manpage for repository creation and user configuration deta
 3.3 Para corrigir o repositório adicione uma chave publica:
 
 ```sh
-curl -O https://nginx.org/keys/nginx_signing.key && apt-key add ./nginx_signing.key && rm nginx_signing.key
+curl -O https://nginx.org/keys/nginx_signing.key
+apt-key add ./nginx_signing.key
 ```
 
 > Todo repositório oficial disponibiliza uma chave GPG que deve ser adicionada ao sistema operacional, no exemplo acima executamos o download dessa chave e incorporação utilizando o comando 'apt-key add';
