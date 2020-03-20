@@ -193,9 +193,11 @@ Com base no exercício que executamos responda a essa três perguntas simples ne
 Link do formulário: [https://form.jotform.com/200794325273051](https://form.jotform.com/200794325273051)
 
 # Referências:
----
 
 - [Updating the GPG Key for NGINX Products](https://www.nginx.com/blog/updating-gpg-key-nginx-products/);
 
 - [Nginx processo de Instalação e configuração](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/);
 
+---
+
+**Free Software, Hell Yeah!**
