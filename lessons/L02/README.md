@@ -2,7 +2,9 @@
 profhelder.pereira@fiap.com.br
 
 
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/L02_browsers.png)
 
+Imagem de <a href="https://pixabay.com/pt/users/geralt-9301/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=773215">Gerd Altmann</a> por <a href="https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=773215">Pixabay</a>
 ---
 
 # Instalando Pacotes (Configurando um servidor de conteúdo)
@@ -160,7 +162,7 @@ Imagem de <a href="https://pixabay.com/pt/users/Tumisu-148124/?utm_source=link-a
 
 Nesta etapa você substituirá o conteúdo padrão exibido pelo Nginx por um conteúdo próprio customizado;
 
-Todo servidor de conteúdo possui um "document root" isto é, um diretório padrão a partir do qual o conteúdo é entregue a cada requisição HTTP, no caso do nginx em sua instalação padrão na família Debian o diretório responsável por servir o conteúdo é o "/usr/share/nginx/html", seu trabalho será remover o conteúdo deste repositório e substituir pelo conteúdo disponível [neste template]() adequado do [W2School](https://www.w3schools.com/w3css/w3css_templates.asp);
+Todo servidor de conteúdo possui um "document root" isto é, um diretório padrão a partir do qual o conteúdo é entregue a cada requisição HTTP, no caso do nginx em sua instalação padrão na família Debian o diretório responsável por servir o conteúdo é o "/usr/share/nginx/html", seu trabalho será remover o conteúdo deste repositório e substituir pelo conteúdo disponível [neste template](https://github.com/fiapsistemaslinux/SysOps/raw/master/lessons/L02/anexos/pizza.tar.bz2) adequado do [W2School](https://www.w3schools.com/w3css/w3css_templates.asp);
 
 O resultado final deverá ficar mais ou menos assim:
 
@@ -171,11 +173,14 @@ O resultado final deverá ficar mais ou menos assim:
 
 ```sh
 # WGET: Utilize o wget para baixar o conteúdo do template:
-wget  
+wget  https://github.com/fiapsistemaslinux/SysOps/raw/master/lessons/L02/anexos/pizza.tar.bz2
+
+# RM: Como faremos a substituição do conteúdo remova o diretório /usr/share/nginx/html
 
 # TAR: Quando utilizado para expandir arquivos o tar funciona dessa forma:
-tar -xvf <path com o arquivo original> -C <path de destino para o arquivo extraído>
-# Não deixe de consultar cada um desses parâmetros no man!
+tar -xvf <path com o arquivo original>
+
+# Você deve fazer a expansão e em seguida mover a pasta para o local correto (/usr/share/nginx/) não deixe de consultar cada um dos parâmetros do tar no man!
 ```
 
 > Embora não seja um pré-requisito neste caso, é uma boa práticar adequar as permissões do novo conteúdo de acordo com o usuário que acessa esses recursos, neste caso o usuário de sistemas nginx, não esqueça de fazer isso de forma recursiva praticando o conteúdo das aulas sobre chmod =)
@@ -189,7 +194,7 @@ Imagem de <a href="https://pixabay.com/pt/users/AnnCarter-162688/?utm_source=lin
 
 Com base no exercício que executamos responda a essa três perguntas simples neste formulário, sua resposta será utilizada como mérito na nossa avaliação semestral;
 
-Link do formulário:
+Link do formulário: [https://form.jotform.com/200794325273051](https://form.jotform.com/200794325273051)
 
 ---
 
