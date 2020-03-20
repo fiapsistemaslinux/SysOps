@@ -176,7 +176,8 @@ wget  https://github.com/fiapsistemaslinux/SysOps/raw/master/lessons/L02/anexos/
 # TAR: Quando utilizado para expandir arquivos o tar funciona dessa forma:
 tar -xvf <path com o arquivo original>
 
-# Você deve fazer a expansão e em seguida mover a pasta para o local correto (/usr/share/nginx/) não deixe de consultar cada um dos parâmetros do tar no man!
+# Você deve fazer a expansão e em seguida mover a pasta para o local correto (/usr/share/nginx/) 
+não deixe de consultar cada um dos parâmetros do tar no man!
 ```
 
 > Embora não seja um pré-requisito neste caso, é uma boa práticar adequar as permissões do novo conteúdo de acordo com o usuário que acessa esses recursos, neste caso o usuário de sistemas nginx, não esqueça de fazer isso de forma recursiva praticando o conteúdo das aulas sobre chmod =)
