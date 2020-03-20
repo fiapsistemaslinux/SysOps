@@ -6,18 +6,16 @@ profhelder.pereira@fiap.com.br
 
 Imagem de [Gerd Altmann](https://pixabay.com/pt/users/geralt-9301/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=773215) obtida via [Pixabay](https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=773215");
 
----
-
 # Instalando Pacotes (Configurando um servidor de conteúdo)
+---
 
 Neste LAB revisaremos alguns conteúdos voltados a instalação de pacotes para configurar um servidor linux rodando Nginx implementando uma página estática de conteúdo;
 
 **Objetivo:**
 Revisitar o processo de instalação de pacotes e configuração de repositórios em ambientes GNU/Linux utilizando a  família Debian e em seguida habilitar repositório um  de terceiros para obter a versão mais recente de uma aplicação;
 
----
-
 ## 1. Atualizando os pacotes do servidor
+---
 
 Após o acesso ao sistema operacional, verifique os repositórios configurados:
 
@@ -36,9 +34,8 @@ sudo apt-get update
 sudo apt-get upgrade
 ```
 
----
-
 ## 2. Instalação do Nginx:
+---
 
 Nesta segunda etapa execute a instalação do Nginx de acordo com a versão disponível no repositório:
 
@@ -80,9 +77,9 @@ ss -ntpl
 ```sh
 curl 127.0.0.1:80
 ```
----
 
 ## 3. Atualizando o repositório
+---
 
 Após a instalação execute a configuração de um novo repositório, o que possibilitará obter uma versão atualizada do Nginx:
 
@@ -130,9 +127,8 @@ curl -O https://nginx.org/keys/nginx_signing.key && apt-key add ./nginx_signing.
 
 > Todo repositório oficial disponibiliza uma chave GPG que deve ser adicionada ao sistema operacional, no exemplo acima executamos o download dessa chave e incorporação utilizando o comando 'apt-key add';
 
----
-
 ## 4. Atualizando a aplicação
+---
 
 4.1 Finalmente instale a nova versão do Nginx!
 
@@ -154,14 +150,11 @@ nginx -v
 systemctl restart nginx
 ```
 
----
-
-# Fast Challenge: Hora de popular o seu servidor de conteúdo
-
 ![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/DEF_goal.png)
 
-Imagem de [Tumisu](https://pixabay.com/pt/users/Tumisu-148124/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1955806) obtida via [Pixabay](https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1955806)
-
+# 5. Challenge
+---
+*(Hora de popular o seu servidor de conteúdo e revisar alguns detalhes)*
 
 Nesta etapa você substituirá o conteúdo padrão exibido pelo Nginx por um conteúdo próprio customizado;
 
@@ -188,22 +181,14 @@ tar -xvf <path com o arquivo original>
 
 > Embora não seja um pré-requisito neste caso, é uma boa práticar adequar as permissões do novo conteúdo de acordo com o usuário que acessa esses recursos, neste caso o usuário de sistemas nginx, não esqueça de fazer isso de forma recursiva praticando o conteúdo das aulas sobre chmod =)
 
----
-
-# QUIZ:
-
-![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/DEF_quiz.png)
-
-Imagem de [Ann Carter](https://pixabay.com/pt/users/AnnCarter-162688/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2174368") obtida via [Pixabay](https://pixabay.com/pt/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2174368)
-
+## Exercício:
 
 Com base no exercício que executamos responda a essa três perguntas simples neste formulário, sua resposta será utilizada como mérito na nossa avaliação semestral;
 
 Link do formulário: [https://form.jotform.com/200794325273051](https://form.jotform.com/200794325273051)
 
+# Referências:
 ---
-
-Referências:
 
 - [Updating the GPG Key for NGINX Products](https://www.nginx.com/blog/updating-gpg-key-nginx-products/);
 
