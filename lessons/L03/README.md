@@ -17,7 +17,7 @@ O Ntopng é um sistema de monitoramento de tráfego de rede de código aberto es
 
 ## 1. Gestão de Pacotes na Família RedHat
 
-1.1 O gerenciamento destes pacotes é feito utilizando a ferramenta RPM que possui uma função similar a função do DPKG, instalar e remover binários do sistema, para testar essa ferramenta executaremos o download do binário de configuração do repositório do ntopng:
+1.1 O gerenciamento destes pacotes é feito utilizando a ferramenta RPM que possui uma função similar a função do DPKG, instalar e remover binários do sistema, para testar essa ferramenta executaremos o download do binário de configuração do repositório extra EPEL que será utilizado no processo de resolução de algumas dependências na instalação do ntopng.
 
 ```sh
 sudo su -
@@ -51,6 +51,12 @@ sudo cat /etc/yum.repos.d/epel.repo
 sudo yum repolist 
 ```
 
+**E esse tal de yum?**
+
+Esta é a primeira vez que utilizamos o yum, trata-se do gerenciador de pacotes de alto nível da Família Red Hat, assim como o RPM pode ser comparado em funcionalidade ao DPKG o yum pode ser comparado da mesma forma ao apt, ele é responsável por gerenciar pacotes com base em repositórios alocados nos arquivos .repo do diretório **"/etc/yum.repos.d."** o comando acima foi utilizado para listar esses repositórios.
+
+> Verifique que ao adicionar um repositório não é necessário executar um comando de atualização de cache como o 'apt-get update', essa atualização de cache e relação de pacotes disponíveis ocorre automaticamente toda vez que invocamos as funções do yum;
+
 ## 2. Agora sim, Instalando o NTOP
 
 2.1 A versão mais recente do Ntopng não está disponível no repositório padrão do CentOS 7, dessa forma assim como no Lab anterior utilizaremos um repositório personalizado:
@@ -73,7 +79,7 @@ yum clean all
 yum update
 ```
 
-2.3 E mseguida instale os binários do Epel:
+2.3 Em seguida instale os binários do Epel:
 
 ```sh
 sudo yum --enablerepo=epel install redis ntopng hiredis-devel -y
