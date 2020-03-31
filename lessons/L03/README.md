@@ -90,8 +90,6 @@ yum update
 sudo yum --enablerepo=epel install redis ntopng hiredis-devel -y
 ```
 
-## Controlando o Serviço
-
 2.4 O pacote Ntop fornece um serviço de monitoração, este serviço atua como um processo em execução no background do sistema operacional sendo controlado pela ferramenta de gerenciamento de serviços [System-D](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/chap-managing_services_with_systemd), dessa forma é necessário inicializar o serviço usando o systemD:
 
 ```sh
