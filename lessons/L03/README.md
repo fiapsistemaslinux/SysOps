@@ -7,7 +7,7 @@ Imagem de [janjf93](https://pixabay.com/pt/users/janjf93-3084263/?utm_source=lin
 
 
 # Instalando Pacotes Parte 2 
-**Configurando um servidor de monitoraçã com ntop**
+**Configurando um servidor de monitoração com ntop**
 
 O Ntopng é um sistema de monitoramento de tráfego de rede de código aberto escrito com base em PHP e Lua, esta ferramenta também será o nosso projeto para entender a instalação de pacotes na família RedHat e aprofundar o contato com a implementação de um serviço controlado via [System-D](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/chap-managing_services_with_systemd);
 
