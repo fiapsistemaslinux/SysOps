@@ -43,7 +43,7 @@ Uma vez confirmada a existência do pacote, em primeiro lugar, você precisará 
  1- Depois de ter sua partição LVM , é preciso inicializar-la como um volume físico . Assumindo que esta partição é /dev/sdb1:
 
 ```sh
-sudo pvcreate /dev/sdb1
+sudo pvcreate /dev/xvdh1
 pvs
 ```
 
@@ -54,14 +54,14 @@ O comando **pvs** utilizado acima permite a visualização das partições entre
  2- Após a definição dos discos utilizados criamos nosso pool de recursos, um volume group, neste exemplo ele receberá o nome "foo":
 
 ```sh
-sudo vgcreate foo /dev/sdb1
+sudo vgcreate foo /dev/xvdh1
 vgs
 ```
 
  3- Criado o grupo de volumes já temos os recursos necessários para construção de nossa partição:
 
 ```sh
-sudo lvcreate -n bar -L 30G foo
+sudo lvcreate -n bar -L 5G foo
 lvs
 ls -l /dev/mapper/
 lvdisplay
@@ -85,7 +85,7 @@ Aqui o teste de um dos recursos mais interessantes no uso do LVM a manipulação
  1- Execute o processo de resize com o comando lvextend:
 
 ```sh
-# lvextend -L +10G /dev/mapper/foo--bar	
+# lvextend -L +2G /dev/mapper/foo--bar	
 ```
 > O espaço é alocado a partir de qualquer espaço livre em qualquer lugar do Grupo de Volumes nomeado como bar, Um detalhe interessante é que caso você tenha vários volumes físicos compondo o VG, você poderia adicionar os nomes de um ou mais deles no fim do comando e assim especificaria exatamente quais discos devem ser usados para sua alteração.
 
@@ -94,10 +94,10 @@ Aqui o teste de um dos recursos mais interessantes no uso do LVM a manipulação
 - Como no exemplo formatamos utilizando xfs, utilize o utilitário xfs_growfs:
 
 ```sh
-# sudo xfs_growfs /dev/mapper/foo--bar -D 10G
+# sudo xfs_growfs /dev/mapper/foo--bar -D 7G
 ```
 
-- Com relação a sistemas ext 3/4 o utilitário responsável por este processo é resize2fs, logo a execução do comando seria a seguinte:
+- Com relação a sistemas ext3 e ext4 o utilitário responsável por este processo é resize2fs, logo a execução do comando seria a seguinte:
 
 ```sh
 #  sudo resize2fs /dev/mapper/foo--bar
@@ -108,9 +108,9 @@ Verifique que em ambos os casos o processo é executado SEM que seja necessário
 3- Caso não haja mais espaço no Volume Group ou por qualquer outro motivo você decida expandilo, utilize o comando vgextend para essa finalizadade:
 
 ```sh
-# sudo pvcreate /dev/sdb2
+# sudo pvcreate /dev/xvdh2
 # pvs
-# sudo vgextend foo /dev/sdb2
+# sudo vgextend foo /dev/xvdh2
 # vgs
 ```
 
