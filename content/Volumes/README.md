@@ -244,8 +244,12 @@ umount /mnt
 
 ## Particionamento de SWAP:
 
-	Alguns sistemas Linux utilizam SWAP como memória secundária (colocando em termos gerais é um tipo de cache utilizado para otimizar o desempenho servindo como auxilio a própria memória RAM ), 
-  para criar uma partição de SWAP utilize o comando mkswap conforme abaixo:
+Alguns sistemas Linux utilizam SWAP como memória secundária;
+
+> Colocando em termos gerais é um tipo de cache utilizado para otimizar o desempenho servindo como auxilio a própria memória RAM 
+
+
+Para criar uma partição de SWAP utilize o comando mkswap conforme abaixo:
   
   ```sh
   mkswap /dev/xvdh1
@@ -262,4 +266,22 @@ free -m
 
 # Ative a memória Swap:
 swapon /dev/xvdh2 && free -m
+```
+
+## Configuração de montagem automatica utilizando o FSTAB:
+
+Os sistemas GNU/Linux possuem um arquivo que contem as informações a respeito da montagem de todos os "filesystems" do sistema, Este arquivo é o "/etc/fstab". O arquivo é lido na inicialização do sistema e é quem diz ao sistema o que montar, onde montar e os parâmetros de montagem:
+
+```sh
+cat /etc/fstab
+```
+
+### Representação de discos utilizando UUID e Label
+
+Além do nome uma alternativa inteligente para especificar o disco/partição utilizado  é o método "UUID – Universally Unique Identifier" ou o método de Labels.
+
+No GNU/Linux todo dispositivo possui um UUID que funciona como um registro único ou uma chave primária que identifica o disco em questão, para descobrirmos o "UUID" de nossas partições podemos utilizar o aplicativo blkid:
+
+```sh
+blkid
 ```
