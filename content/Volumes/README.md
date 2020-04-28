@@ -290,3 +290,7 @@ No GNU/Linux todo dispositivo possui um UUID que funciona como um registro únic
 ```sh
 blkid
 ```
+
+---
+
+**Free Software, Hell Yeah!**
