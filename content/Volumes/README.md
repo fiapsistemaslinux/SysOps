@@ -1,3 +1,8 @@
+##### Fiap - Soluções em Redes para ambientes Linux
+profhelder.pereira@fiap.com.br
+
+---
+
 # Gerenciando Volumes
 
 Do ponto de vista técnico da pra dividir as tarefas relacionadas a sistemas de arquivos em duas partes, o gerenciamento físico voltada para infra-estrutura de hardware e suporte a esquema de partições e o gerenciamento lógico voltado para a definição dos pontos de montagem.
