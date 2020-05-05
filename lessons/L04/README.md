@@ -227,9 +227,15 @@ systemctl restart mysql
 
 ![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/L04_error.png)
 
-**Exercício Rápido:**
+**Troubleshooting:**
 
 É provavel que tenha ocorrido um erro na inicialização do serviço, seu trabalho será verificar se a aplicação subiu corretamente e corrigir qualquer erro que ocorra nesta etapa final;
+
+# 6. Exercício:
+
+Responda a essa três perguntas no formulário abaixo, sua resposta será utilizada como mérito na NAC da próxima semana:
+
+Link do formulário: [https://form.jotform.com/201256184286658](https://form.jotform.com/201256184286658)
 
 ---
 
