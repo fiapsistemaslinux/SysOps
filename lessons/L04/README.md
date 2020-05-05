@@ -22,33 +22,37 @@ Precisamos criar um usuário com o perfil de desenvolvimento que acessará o ser
 * 1.1 Configure este usuário com o username **sysops** e com permissões administrativas via sudo:
 
 ```sh
-useradd sysops -m -d /home/sysops -G sudo
+sudo useradd sysops -m -d /home/sysops -G sudo
 ```
 
 ## 2. Configurando nosso Banco de Dados:
 
 Em nossa abordagem com o objetivo de revisar alguns conteudos faremos a configuração manual de um repositório para obter os pacotes do SGBD mysql:
 
-2.1 Adicione a chave GPG do novo repositório:
+2.1 Asumindo permissões administrativas, inicie a configuração adicionando a chave GPG do novo repositório:
 ```sh
+sudo su -
 sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5072E1F5
 ```
 
 2.2 Em seguida crie um arquivo com a referência para o repositório:
 ```sh
-sudo su -
-echo "deb http://repo.mysql.com/apt/ubuntu/ bionic mysql-5.7" > /etc/apt/sources.list.d/mysql.list  
+echo "deb http://repo.mysql.com/apt/ubuntu/ bionic mysql-5.7" > /etc/apt/sources.list.d/mysql.list'
 ```
 
-2.3 Não executaremos uma instalação interativa do banco de dados por isso uma variável de ambiente será configurada antes de iniciar o processo:
+2.3 Verifique se o novo repositório foi configurado de acordo com o esperado:
+```sh
+apt update
+```
+
+2.4 Não executaremos uma instalação interativa do banco de dados por isso uma variável de ambiente será configurada antes de iniciar o processo:
 ```sh
 export DEBIAN_FRONTEND=noninteractive
 ```
 
-2.4 Em seguida instale a versão mais recente do pacote mysql e o servidor de conteúdo apache
+2.5 Em seguida instale a versão mais recente do pacote mysql e o servidor de conteúdo apache
 ```sh
-sudo apt update -y
-sudo apt install mysql-server php php-mysql apache2 -y
+apt install mysql-server php php-mysql apache2 -y
 ```
 
 **Importante:** Este método objetiva garantir que a execução seja completamente feita pelo terminal sem interação o que por consequencia criará dois avisos de segurança:
@@ -84,7 +88,7 @@ wget -P /usr/local/src/wordpres https://wordpress.org/latest.tar.gz
 3.2 Faça a extração do wordpress para a raiz do servidor de conteúdo:
 
 ```sh
-tar -xf /usr/local/src/wordpres/latest.tar.gz -C /var/www/html/
+tar -xvf /usr/local/src/wordpres/latest.tar.gz -C /var/www/html/
 ```
 
 3.3 Altere as permissões de acesso ao conteúdo:
@@ -120,15 +124,15 @@ CREATE DATABASE wordpress;
 
 4.4 Em seguida crie o usuário de acesso ao banco:
 ```sh
-CREATE USER 'sysops'@'localhost' IDENTIFIED BY 'mydatabasepass';
+CREATE USER 'wordpress-adm'@'localhost' IDENTIFIED BY 'mydatabasepass';
 ```
 
 4.4.1 Edite as permissções de acesso do usuário
 ```sh
-GRANT ALL ON wordpress.* TO 'dbadmin'@'localhost' IDENTIFIED BY 'mydatabasepass';
+GRANT ALL ON wordpress.* TO 'wordpress-adm'@'localhost' IDENTIFIED BY 'mydatabasepass';
 ```
 
-4.4.2 Execute um flush para atualizar a tabela de permissões e sai do banco:
+4.4.2 Execute um flush para atualizar a tabela de permissões e saia do mysql:
 ```sh
 FLUSH PRIVILEGES;
 exit
@@ -139,7 +143,7 @@ exit
 | Campo         | Valor           |
 |---------------|-----------------|
 | Database name | wordpress       |
-| Username      | sysops          |
+| Username      | wordpress-adm   |
 | Password      | mydatabasepass  |
 | Database Host | localhost       |
 | Table Prefix  | wp_             |
