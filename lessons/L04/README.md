@@ -149,6 +149,10 @@ exit
 ![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/L04_wordpress_done.png)
 
 
+---
+
+# Etapa Bônus
+
 ## 5. Configurando um volume para o Banco de Dados:
 
 5.1. Neste exercício utilizaremos um volume próprio para o banco de dados, para isso identifique o disco extra adicionado a instância e execute o particionamento:
@@ -212,7 +216,7 @@ mount -a
 df -h
 ```
 
-5.7 Finalmente inicialize novamento o banco de dados, seu trabalho será verificar se a aplicação subiu corretamente e corrigir qualquer erro que ocorra nesta etapa final;
+**Erro!** Finalmente inicialize novamento o banco de dados, seu trabalho será verificar se a aplicação subiu corretamente e corrigir qualquer erro que ocorra nesta etapa final;
 
 ---
 
