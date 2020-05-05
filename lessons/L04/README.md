@@ -37,7 +37,7 @@ apt-key adv --keyserver pgp.mit.edu --recv-keys 5072E1F5
 
 2.2 Em seguida crie um arquivo com a referência para o repositório:
 ```sh
-echo "deb http://repo.mysql.com/apt/ubuntu/ bionic mysql-5.7" > /etc/apt/sources.list.d/mysql.list'
+echo "deb http://repo.mysql.com/apt/ubuntu/ bionic mysql-5.7" > /etc/apt/sources.list.d/mysql.list
 ```
 
 2.3 Verifique se o novo repositório foi configurado de acordo com o esperado:
