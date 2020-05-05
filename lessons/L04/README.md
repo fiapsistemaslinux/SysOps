@@ -216,9 +216,16 @@ mount -a
 df -h
 ```
 
+5.6.3 Após a execucação do processo reinicialize o serviço:
+```sh
+systemctl restart mysql
+```
+
 ![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/L04_error.png)
 
-Finalmente inicialize novamento o banco de dados, seu trabalho será verificar se a aplicação subiu corretamente e corrigir qualquer erro que ocorra nesta etapa final;
+**Exercício Rápido:**
+
+É provavel que tenha ocorrido um erro na inicialização do serviço, seu trabalho será verificar se a aplicação subiu corretamente e corrigir qualquer erro que ocorra nesta etapa final;
 
 ---
 
