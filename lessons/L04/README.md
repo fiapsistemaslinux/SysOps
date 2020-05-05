@@ -216,7 +216,9 @@ mount -a
 df -h
 ```
 
-**Erro!** Finalmente inicialize novamento o banco de dados, seu trabalho será verificar se a aplicação subiu corretamente e corrigir qualquer erro que ocorra nesta etapa final;
+![alt tag](https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/images/L04_error.png)
+
+Finalmente inicialize novamento o banco de dados, seu trabalho será verificar se a aplicação subiu corretamente e corrigir qualquer erro que ocorra nesta etapa final;
 
 ---
 
