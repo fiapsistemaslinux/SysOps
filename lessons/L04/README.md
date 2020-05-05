@@ -19,20 +19,20 @@ Imagem de: [https://br.wordpress.org/about/logos/](https://br.wordpress.org/abou
 
 Precisamos criar um usuário com o perfil de desenvolvimento que acessará o servidor de aplicação:
 
-* 1.1 Configure este usuário com o username **sysops** e com permissões administrativas via sudo:
+* 1.1 Assumindo permissões administrativas, configure este usuário com o username **sysops** e com permissões administrativas via sudo:
 
 ```sh
-sudo useradd sysops -m -d /home/sysops -G sudo
+sudo su -
+useradd sysops -m -d /home/sysops -G sudo
 ```
 
 ## 2. Configurando nosso Banco de Dados:
 
 Em nossa abordagem com o objetivo de revisar alguns conteudos faremos a configuração manual de um repositório para obter os pacotes do SGBD mysql:
 
-2.1 Asumindo permissões administrativas, inicie a configuração adicionando a chave GPG do novo repositório:
+2.1 Inicie a configuração adicionando a chave GPG do novo repositório:
 ```sh
-sudo su -
-sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5072E1F5
+apt-key adv --keyserver pgp.mit.edu --recv-keys 5072E1F5
 ```
 
 2.2 Em seguida crie um arquivo com a referência para o repositório:
