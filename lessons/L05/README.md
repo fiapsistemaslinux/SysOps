@@ -96,7 +96,9 @@ docker run -d --rm --name wordpress-app \
 
 # Etapa Bônus
 
-## 5. Na configuração atual o que acontecerá se reiniciarmos o docker ou o servidor inteiro?
+## 5. O que acontecerá se reiniciarmos o docker?
+
+E se reiniciarmos o servidor inteiro?
 
 5.1 Faça os testes e determine se a aplicação subirá automaticamente ou não;
 
