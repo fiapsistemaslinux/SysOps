@@ -102,6 +102,8 @@ docker run -d --rm --name wordpress-app \
 
 5.2 Caso o resultado do teste apresente um cenário onde a aplicação não subirá automaticamente e pesquise e determine o que deve ser feito para subir os containers de forma automática.
 
+5.3 Quanto a persistencia de dados o que acontece com as informações estáticas da página em PHP? determine qual o ponto de montagem correto e crie um volume persistente para o wordpress;
+
 ---
 
 ## Material de Referência e Recomendações:
