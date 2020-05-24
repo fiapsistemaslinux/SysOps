@@ -36,7 +36,6 @@ docker network inspect wordpress
 Crie os seguintes volumes para guardar os dados do banco e o conteúdo estático da aplicação rodando em Wordpress usando os seguintes comandos de criação de volume do docker:
 
 ```sh
-docker volume create www-data
 docker volume create mysql-data
 ```
 
