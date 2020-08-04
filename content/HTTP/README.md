@@ -94,12 +94,18 @@ $ dig www.fiap.com.br
 Saindo do processo de resolução de nomes temos o navegador que ficará responsável por criar a requisição HTTP e abrir uma conexão com o servidor de destino na porta 80 ou 443, o comando telnet existente na maioria dos sistemas derivados da familia Unix pode ser utilizado para simular esse processo:
 
 ```sh
-telnet desconstruindoaweb.com.br 80
-Trying 191.252.81.212...
-Connected to desconstruindoaweb.com.br.
-Escape character is '^]'.
-GET /
+curl -v fiap.com.br:80
+* Rebuilt URL to: fiap.com.br:80/
+*   Trying 52.203.215.221...
+* TCP_NODELAY set
+* Connected to fiap.com.br (52.203.215.221) port 80 (#0)
+> GET / HTTP/1.1
+> Host: fiap.com.br
+> User-Agent: curl/7.58.0
+> Accept: */*
+>
 ```
+
 No exemplo acima utilizamos o método GET, um método é utilizado para gerar um tipo de requisição, as quais chamamos de "HTTP Request Methods" a documentação do site da mozilla é um bom ponto de partida para estes estudos:
 
 * [Documentação MDN > HTTP request methods](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Methods)
