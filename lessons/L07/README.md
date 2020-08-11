@@ -215,16 +215,47 @@ Para execução deste laboratório precisaremos de alguns itens e configuraçõe
 Faremos o download da configuração do Let's Encrypt usando o repositório oficial do Ubuntu:
 
 ```sh
-sudo apt-get update
-sudo apt-get install python-letsencrypt-apache
+sudo apt update
+sudo apt install python3-certbot-apache
 ```
 
-### Parte 2 — Configurando o Certificado:
+### Parte 2 - Remova o virtualhost com o certificado auto assinado anteror e crie um virtual host apenas com a configuração para http:
+
+```sh
+cat > /etc/apache2/sites-available/001-cloud.conf << EOF
+<VirtualHost _default_:80>
+
+        ServerAdmin webmaster@fiapdev.com
+        ServerName  devops.fiaplabs.com
+
+        DocumentRoot /var/www/devops
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+RewriteEngine on
+RewriteCond %{SERVER_NAME} =devops.fiaplabs.com
+RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+</VirtualHost>
+EOF
+```
+
+```sh
+# a2dissite 001-cloud-ssl
+# a2ensite 001-cloud
+# systemctl apache2 reload
+```
+
+```sh
+mv /etc/apache2/sites-available/001-cloud-ssl.conf /etc/apache2/sites-available/001-cloud-ssl.disabled
+```
+
+### Parte 3 — Configurando o Certificado:
 
 Faça a geração do certificado para o Apache usando a ferramenta automatizada do Let's Encrypt, o cliente executará o download e configuração do certificado automatizado:
 
 ```sh
-sudo letsencrypt --apache -d devops.fiapdev.com # Neste exemplo o dominío utilizado foi "devops.fiapdev.com"
+sudo certbot --apache -d <SEU_DOM>.fiaplabs.com --test-cert
 ```
 
 ***Importante***:
