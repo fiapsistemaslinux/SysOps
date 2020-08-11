@@ -42,6 +42,14 @@ Informações mais detalhadas sobre esse processo podem ser obtidas [Neste link]
 
 ---
 
+### Primeiro faça uma instalação do apache:
+
+```sh
+# sudo apt install apache2
+```
+
+---
+
 ## Habilitando criptografia no apache2
 
 O suporte ao uso de criptografia é um recurso modular nativo do apache bastantdo apenas que seja habilitado, para isso execute:
@@ -58,7 +66,7 @@ Verifique se o protocolo foi realmente habilitado listando os módulos em uso e 
 # netstat -ntpl
 ```
 
-> Tenha em mente que o comando usado habilita o suporte a criptografia em geral ou seja tanto o modelo atual usando TLS quanto o modelo mais defasado usando SSL, a definição de qual o protocolo a ser usado na comunicação fica por conta do conjunto de cifras, outro conteúdo disponível no conteúdo da [Apostila direcionado para Criptografia](https://github.com/fiapsistemaslinux/apostila/tree/master/content/Criptografia);
+> Tenha em mente que o comando usado habilita o suporte a criptografia em geral ou seja tanto o modelo atual usando TLS quanto o modelo mais defasado usando SSL, a definição de qual o protocolo a ser usado na comunicação fica por conta do [conjunto de cifras aplicado ao apache](https://httpd.apache.org/docs/2.4/ssl/ssl_howto.html), o mesmo se aplicaria na configuração de [criptografia no nginx](http://nginx.org/en/docs/http/configuring_https_servers.html);
 
 
 ## Configurando um certificado auto assinado:
@@ -75,6 +83,17 @@ Com a chave em “mãos”, crie um certificado, algumas informações serão r
 # openssl req -new -key /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.csr
 ```
 
+Você pode verificar o certificado criado utilizando o comando openssl:
+```sh
+# openssl req -text -noout -verify -in /etc/ssl/certs/apache-selfsigned.csr
+```
+
+A mesma verificação pode ser executada para a chave privada utilizada na criação do certificado:
+
+```sh
+# openssl rsa -in /etc/ssl/private/apache-selfsigned.key
+```
+
 > É neste ponto que o certificado criado por você poderia ser enviado para assinatura por parte de uma autoridade certificadora, ou como faremos abaixo podemos auto assinalo.
 
 Utilize o openssl para assinar o certificado com a chave criada anteriormente e validade de um ano:
@@ -83,13 +102,26 @@ Utilize o openssl para assinar o certificado com a chave criada anteriormente e 
 # openssl x509 -req -days 365 -in /etc/ssl/certs/apache-selfsigned.csr -signkey /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
 ```
 
-Uma vez que o certificado esteja finalizado, basta criarmos uma configuração de virtual host para seu uso, para isso substitua o Vhost utilizado no template anteriomente pelo [modelo sugerido](https://raw.githubusercontent.com/fiapsistemaslinux/apostila/master/content/Apache/vhosts/001-cloud-ssl.conf) para este teste, o modelo esta cheios de comentarios para facilitar o entendimento.
-
-
 Outra opção um pouco mais rápida mas muito menos didática seria executar a função de criação da chave e assinatura em um só comando:
 
 ```sh
 # sudo openssl req -x509 -days 365 -newkey rsa:4096 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
+```
+
+Uma vez que o certificado esteja finalizado, criaremos uma configuração de virtual host para seu uso:
+
+Utilize o template com o [modelo sugerido](https://raw.githubusercontent.com/fiapsistemaslinux/apostila/master/content/Apache/vhosts/001-cloud-ssl.conf) para este teste, o arquivo esta cheios de comentarios para facilitar o entendimento:
+
+```sh
+wget https://raw.githubusercontent.com/fiapsistemaslinux/apostila/master/content/Apache/vhosts/001-cloud-ssl.conf -P /etc/apache2/sites-available/
+```
+EDITE O ARQUIVO BAIXADO DE ACORDO COM O DOMINIO CONFIGURADO NO CERTIFICADO;
+
+Sobre o conteúdo a ser exibido no servidor [utilize este arquivo css/html](https://github.com/fiapsistemaslinux/apostila/raw/master/content/Apache/templates/devops.tar.gz) como tamplate para o nosso laboratório:
+
+```sh
+wget https://github.com/fiapsistemaslinux/apostila/raw/master/content/Apache/templates/devops.tar.gz
+tar -xvf devops.tar.gz -C /var/www/
 ```
 
 Habilite o modulo responsável pela função de rewrite dos acessos na porta 80 para a porta 443 e o novo VirtualHost para acesso ao site:
@@ -97,7 +129,6 @@ Habilite o modulo responsável pela função de rewrite dos acessos na porta 80 
 ```sh
 # a2enmod rewrite
 # a2dissite 000-default
-# a2dissite 001-cloud
 # a2ensite 001-cloud-ssl
 ```
 
