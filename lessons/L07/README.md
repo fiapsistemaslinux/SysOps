@@ -243,7 +243,7 @@ EOF
 ```sh
 # a2dissite 001-cloud-ssl
 # a2ensite 001-cloud
-# systemctl apache2 reload
+# systemctl reload apache2
 ```
 
 ```sh
