@@ -27,7 +27,7 @@ Ao finalizar o processo de instalação acima o bind é entregue com a configura
 Para testar essa implementação primeiro inicialize o serviço bind9 nos servidores Ubuntu:
 
 ```sh
-# service bind9 start
+# systemctl start bind9
 ```
 
 Redirecione seu DNS para o localhost alterando o arquivo resolv.conf:
