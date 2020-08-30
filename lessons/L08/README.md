@@ -155,7 +155,7 @@ OK
 # systemctl restart bind9
 ```
 
-2.8 Teste o processo de resolução de nomes:
+2.8 Teste o processo de resolução de nomes, com base na configuração anterior execute os testes abaixo e salve os resultados no formulário:
 
 ```sh
 # Verifique quem é SOA sobre o domínio fiaplabs.com.br:
@@ -182,6 +182,11 @@ dig @127.0.0.1  smtp.fiaplabs.com.br. +short
 # Faça um teste de resolução de nomes para um ponteiro MX:
 dig @127.0.0.1 -t MX fiaplabs.com.br. +short
         -> 10 mail.fiaplabs.com.br.
+        
+# Faça um teste de resolução de nomes para usando a interface de ipv6 do bind9:
+dig @::1 pop.fiaplabs.com.br. +short
+        -> mail.fiaplabs.com.br.
+        -> 192.168.100.10
 
 ```
 
