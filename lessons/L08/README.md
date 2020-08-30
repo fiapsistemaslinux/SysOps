@@ -172,7 +172,17 @@ dig @127.0.0.1 -t A ns1.fiaplabs.com.br.
 
 # Faça um teste de resolução de nomes para ipv6:
 dig @127.0.0.1 -t AAAA ns1.fiaplabs.com.br. +short
-        -> 2a00:c98:2060:a000:1:0:1d1e:ca75    
+        -> 2a00:c98:2060:a000:1:0:1d1e:ca75
+ 
+# Faça um teste de resolução de nomes para um CNAME:
+dig @127.0.0.1  smtp.fiaplabs.com.br. +short
+        -> mail.fiaplabs.com.br.
+        -> 192.168.100.10
+
+# Faça um teste de resolução de nomes para um ponteiro MX:
+dig @127.0.0.1 -t MX fiaplabs.com.br. +short
+        -> 10 mail.fiaplabs.com.br.
+
 ```
 
 ---
