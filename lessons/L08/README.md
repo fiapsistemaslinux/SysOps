@@ -110,10 +110,8 @@ As linhas acima descrevem o seguinte:
 2.4 Configure a zona fiaplabs.com.br copiando o arquivo base entregue na própria documentação do bind9:
 
 ```sh
-cp /etc/bind/db.local /var/cache/bind/db.fiaplabs.com.br
-sed -i 's/localhost/fiaplabs.com.br/g' /var/cache/bind/db.fiaplabs.com.br
-sed -i 's/127.0.0.1/192.168.100.10/g' /var/cache/bind/db.fiaplabs.com.br
-sed -i 's/::1/2a00:c98:2060:a000:1:0:1d1e:ca75/g' /var/cache/bind/db.fiaplabs.com.br
+curl https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/lessons/L08/ubuntu/db.fiaplabs.com.br \
+-o /var/cache/bind/db.fiaplabs.com.br
 ```
 
 2.5 Verifique a configuração aplicada ao arquivo de DNS:
@@ -126,19 +124,56 @@ O formato deverá ser similar ao modelo abaixo:
 
 ```sh
 $TTL    604800
-@       IN      SOA     fiaplabs.com.br. root.fiaplabs.com.br. (
+@       IN      SOA     fiaplabs.com.br. helpdesk.fiaplabs.com.br. (
                               2         ; Serial
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
                          604800 )       ; Negative Cache TTL
 ;
-@       IN      NS      fiaplabs.com.br.
-@       IN      A       192.168.100.10
-@       IN      AAAA    2a00:c98:2060:a000:1:0:1d1e:ca75
+@          IN      NS      ns1.fiaplabs.com.br.
+ns1        IN      A       192.168.100.10
+ns1        IN      AAAA    2a00:c98:2060:a000:1:0:1d1e:ca75
+
+@          IN      MX      10 mail
+mail       IN      A       192.168.100.10
+smtp       IN      CNAME   mail
+pop        IN      CNAME   mail
 ```
 
+2.6 Antes de reiniciar o bind9 faça uma checagem do arquivo de zona: 
 
+```sh
+# named-checkzone fiaplabs.com.br /var/cache/bind/db.fiaplabs.com.br
+zone fiaplabs.com.br/IN: loaded serial 2
+OK
+```
+
+2.7 Reinicie o bind9
+
+```sh
+# systemctl restart bind9
+```
+
+2.8 Teste o processo de resolução de nomes:
+
+```sh
+# Verifique quem é SOA sobre o domínio fiaplabs.com.br:
+dig @127.0.0.1 -t SOA fiaplabs.com.br +short
+        -> fiaplabs.com.br. helpdesk.fiaplabs.com.br. 2 604800 86400 2419200 604800
+
+# Verifique quem é o nameserver responsável pelo domínio fiaplabs.com.br:
+dig @127.0.0.1 -t NS fiaplabs.com.br +short
+        -> ns1.fiaplabs.com.br.
+
+# Faça um teste de resolução de nomes para ipv4:
+dig @127.0.0.1 -t A ns1.fiaplabs.com.br.
+        -> 192.168.100.10
+
+# Faça um teste de resolução de nomes para ipv6:
+dig @127.0.0.1 -t AAAA ns1.fiaplabs.com.br. +short
+        -> 2a00:c98:2060:a000:1:0:1d1e:ca75    
+```
 
 ---
 
