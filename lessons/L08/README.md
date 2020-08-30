@@ -10,27 +10,28 @@ Neste laboratório criaremos uma configuração de DNS utilizando a arquitetura 
 
 ## Instalação do Serviço Bind9
 
-O Bind9 é um dos projetos mais utilizados em arquiteturas de DNS, ele é fornecido e mantido pela [ISC](https://www.isc.org/downloads/bind/), sendo provavelmente solução mais utilizada e consequente aquela que oferece melhor suporte da comunidade e documentação online.
+1.1 O Bind9 é um dos projetos mais utilizados em arquiteturas de DNS, ele é fornecido e mantido pela [ISC](https://www.isc.org/downloads/bind/), sendo provavelmente solução mais utilizada e consequente aquela que oferece melhor suporte da comunidade e documentação online.
 
 ```sh
-# apt-get update
-# apt-get install bind9 dnsutils bind9-doc
+# apt-get update && apt-get install bind9 dnsutils bind9-doc -y 
 ```
 
 > Para ambientes da familia RedHat o processo de instalação utiliza o pacote bind ao invés de bind9 e cria um serviço cuja unidade no systemd é chamada named.
 
-Para testar essa implementação primeiro inicialize o serviço bind9 nos servidores Ubuntu:
+1.2 Para testar essa implementação primeiro inicialize o serviço bind9 nos servidores Ubuntu:
 
 ```sh
 # systemctl start bind9
 # journalctl -fu bind9
 ```
 
-Faça um teste simples utilizando o comando dig:
+1.3 Faça um teste simples utilizando o comando dig:
 
 ```sh
 # dig @127.0.0.1 www.fiap.com.br
 ```
+
+> Se a conutla falhar teste novamente em 10 a 20 segundos;
 
 Ao executar o dig verifique duas informações:
 
@@ -60,6 +61,83 @@ A primeira entrada do arquivo "named.conf.default-zones" contém uma zona do tip
 > A relação recebida na consulta acima representa o cluster de servidores DNS responsáveis pela composição do cluster
 > do root server "L.ROOT-SERVERS.NET" um dos 13 root servers que compoem a infra-estrutura de DNS, alias a relação completa 
 > destes servidores pode ser consultado neste [MAPA](http://www.root-servers.org/).
+
+---
+
+# Configurando um SOA
+
+O exemplo anterior serviu para esquentar um pouco e para entendermos a estrutura basica do bind, para este laboratório executaremos o processo de configuração do bind como SOA "Start of Authority" do domínio fictício fiaplabs.com.br.
+
+2.1 Para este laboratório crie uma interface virtual ipv4 e outra ipv6, elas serão usadas em alguns exemplos:
+
+```sh
+ip a add 192.168.100.10 dev eth0:DNS
+ping -c 3 192.168.100.10
+
+
+ip -6 address add 2A00:0C98:2060:A000:0001:0000:1d1e:ca75/64 dev eth0:DNS6
+ping6 -c3 2a00:c98:2060:a000:1:0:1d1e:ca75
+```
+
+
+
+2.2 Crie um novo arquivo de configuração de zona, ele será adicionado com o nome ***/etc/bind/named.conf.fiaplabs***:
+
+```sh
+cat <<EOF > /etc/bind/named.conf.fiaplabs
+zone "fiaplabs.com.br" {
+        type master;
+        file "db.fiaplabs.com.br";
+};
+EOF
+```
+
+2.3 Inclua o arquivo como parte da configuração do bind9:
+
+```sh
+cat <<EOF >> /etc/bind/named.conf
+include "/etc/bind/named.conf.fiaplabs";
+EOF
+```
+
+As linhas acima descrevem o seguinte:
+
+1. A Zona a ser configurada é a zona ***fiaplabs.com.br***, a string ***zone*** declara que inicamos a configuração de uma nova zona;
+2. O tipo de zona escolhido foi ***master*** ou seja, esse será o DNS principal resposnável pela zona;
+3. Outros DNS tambem poderão responder por essa zona porem como tipo ***slave***;
+4. O campo file determina onde está o arquivo de zona, o diretório "/var/cache/bind/" é a pasta default para armazenar arquivo de zona cofigurada automaticamente na instalação do bind9, portanto a PATH compelta do arquivo será: "/var/cache/bind/db.fiaplabs.com.br";
+
+2.4 Configure a zona fiaplabs.com.br copiando o arquivo base entregue na própria documentação do bind9:
+
+```sh
+cp /etc/bind/db.local /var/cache/bind/db.fiaplabs.com.br
+sed -i 's/localhost/fiaplabs.com.br/g' /var/cache/bind/db.fiaplabs.com.br
+sed -i 's/127.0.0.1/192.168.100.10/g' /var/cache/bind/db.fiaplabs.com.br
+sed -i 's/::1/2a00:c98:2060:a000:1:0:1d1e:ca75/g' /var/cache/bind/db.fiaplabs.com.br
+```
+
+2.5 Verifique a configuração aplicada ao arquivo de DNS:
+
+```sh
+cat /var/cache/bind/db.fiaplabs.com.br
+```
+
+O formato deverá ser similar ao modelo abaixo:
+
+```sh
+$TTL    604800
+@       IN      SOA     fiaplabs.com.br. root.fiaplabs.com.br. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      fiaplabs.com.br.
+@       IN      A       192.168.100.10
+@       IN      AAAA    2a00:c98:2060:a000:1:0:1d1e:ca75
+```
+
 
 
 ---
