@@ -147,7 +147,7 @@ Com relação aos campos que fazem a composição do arquivo de zona:
 |--------------------|-----------------------------------------------------------------------------------------------|
 | Serial             | Número de série incremental que especifica a versão do arquivo da zona                        |
 | Refresh            | Quanto tempo um servidor configurado como slave deve aguardar para solicitar a nova versão do arquivo de zona ao dns mestre |
-| Retry              | Especificação de tempo para um servidor configurado como slave deve realizar novamente uma tentativa de solicitação ao ocorrer uma falha  |
+| Retry              | Especificação de tempo para que um servidor configurado como slave realize novamente uma tentativa de solicitação após ocorrer uma falha  |
 | Expire             | Especifica por quanto tempo um DNS slave deve continuar respondendo na auxencia de comunicação com o DNS master                            |
 | Negative Cache TTL | Especificação do tempo máximo para as informações mantidas em cache de DNS |
 
