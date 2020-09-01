@@ -170,33 +170,33 @@ OK
 ```sh
 # Verifique quem é SOA sobre o domínio fiaplabs.com.br:
 dig @127.0.0.1 -t SOA fiaplabs.com.br +short
-        -> fiaplabs.com.br. helpdesk.fiaplabs.com.br. 2 604800 86400 2419200 604800
+        -> 
 
 # Verifique quem é o nameserver responsável pelo domínio fiaplabs.com.br:
 dig @127.0.0.1 -t NS fiaplabs.com.br +short
-        -> ns1.fiaplabs.com.br.
+        -> 
 
 # Faça um teste de resolução de nomes para ipv4:
 dig @127.0.0.1 -t A ns1.fiaplabs.com.br.
-        -> 192.168.100.10
+        -> 
 
 # Faça um teste de resolução de nomes para ipv6:
 dig @127.0.0.1 -t AAAA ns1.fiaplabs.com.br. +short
-        -> 2a00:c98:2060:a000:1:0:1d1e:ca75
+        -> 
  
 # Faça um teste de resolução de nomes para um CNAME:
 dig @127.0.0.1  smtp.fiaplabs.com.br. +short
-        -> mail.fiaplabs.com.br.
-        -> 192.168.100.10
+        -> 
+        -> 
 
 # Faça um teste de resolução de nomes para um ponteiro MX:
 dig @127.0.0.1 -t MX fiaplabs.com.br. +short
-        -> 10 mail.fiaplabs.com.br.
+        -> 
         
 # Faça um teste de resolução de nomes para usando a interface de ipv6 do bind9:
 dig @::1 pop.fiaplabs.com.br. +short
-        -> mail.fiaplabs.com.br.
-        -> 192.168.100.10
+        -> 
+        -> 
 
 ```
 
