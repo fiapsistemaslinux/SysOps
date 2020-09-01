@@ -180,7 +180,7 @@ dig @127.0.0.1 -t NS fiaplabs.com.br +short
         -> 
 
 # Faça um teste de resolução de nomes para ipv4:
-dig @127.0.0.1 -t A ns1.fiaplabs.com.br.
+dig @127.0.0.1 -t A ns1.fiaplabs.com.br. +short
         -> 
 
 # Faça um teste de resolução de nomes para ipv6:
