@@ -27,6 +27,8 @@ sudo su -
 # journalctl -fu bind9
 ```
 
+> Cancele o comando anterior com Ctrl^C após analisar a saída;
+
 1.3 Faça um teste simples utilizando o comando dig:
 
 ```sh
