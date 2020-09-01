@@ -3,10 +3,6 @@ profhelder.pereira@fiap.com.br
 
 ---
 
-Neste laboratório criaremos uma configuração de DNS utilizando a arquitetura abaixo:
-
----
-
 
 ## Instalação do Serviço Bind9
 
