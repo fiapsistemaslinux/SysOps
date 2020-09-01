@@ -112,7 +112,8 @@ As linhas acima descrevem o seguinte:
 2.4 Configure a zona fiaplabs.com.br copiando o arquivo base entregue na própria documentação do bind9:
 
 ```sh
-curl https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/lessons/L08/ubuntu/db.fiaplabs.com.br \
+curl \
+https://raw.githubusercontent.com/fiapsistemaslinux/SysOps/master/lessons/L08/ubuntu/db.fiaplabs.com.br \
 -o /var/cache/bind/db.fiaplabs.com.br
 ```
 
