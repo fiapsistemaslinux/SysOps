@@ -9,7 +9,7 @@ profhelder.pereira@fiap.com.br
 1.1 O Bind9 é um dos projetos mais utilizados em arquiteturas de DNS, ele é fornecido e mantido pela [ISC](https://www.isc.org/downloads/bind/), sendo provavelmente solução mais utilizada e consequente aquela que oferece melhor suporte da comunidade e documentação online.
 
 ```sh
-# apt-get update && apt-get install bind9 dnsutils bind9-doc -y 
+# sudo apt-get update && sudo apt-get install bind9 dnsutils bind9-doc -y 
 ```
 
 > Para ambientes da familia RedHat o processo de instalação utiliza o pacote bind ao invés de bind9 e cria um serviço cuja unidade no systemd é chamada named.
