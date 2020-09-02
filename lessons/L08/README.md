@@ -45,7 +45,7 @@ Ao executar o dig verifique duas informações:
 
 ## Estrutura base do bind9 na familia Debian
 
-No Ubuntu a estrutura do bind9 utiliza um arquivo base de configuração chamado **named.conf**, basicamnente este arquivo é um apontamento para outros arquivos com finalidades específicas:
+No Ubuntu a estrutura do bind9 utiliza um arquivo base de configuração chamado **named.conf**, basicamente este arquivo é um apontamento para outros arquivos com finalidades específicas:
 
 ```sh
 # cat /etc/bind/named.conf
@@ -63,7 +63,7 @@ A primeira entrada do arquivo "named.conf.default-zones" contém uma zona do tip
 ```
 
 > A relação recebida na consulta acima representa o cluster de servidores DNS responsáveis pela composição do cluster
-> do root server "L.ROOT-SERVERS.NET" um dos 13 root servers que compoem a infra-estrutura de DNS, alias a relação completa 
+> do root server "L.ROOT-SERVERS.NET" um dos 13 root servers que compõem a infra-estrutura de DNS, alias a relação completa 
 > destes servidores pode ser consultado neste [MAPA](http://www.root-servers.org/).
 
 ---
@@ -153,7 +153,7 @@ Com relação aos campos que fazem a composição do arquivo de zona:
 | Serial             | Número de série incremental que especifica a versão do arquivo da zona                        |
 | Refresh            | Quanto tempo um servidor configurado como slave deve aguardar para solicitar a nova versão do arquivo de zona ao dns mestre |
 | Retry              | Especificação de tempo para que um servidor configurado como slave realize novamente uma tentativa de solicitação após ocorrer uma falha  |
-| Expire             | Especifica por quanto tempo um DNS slave deve continuar respondendo na auxencia de comunicação com o DNS master                            |
+| Expire             | Especifica por quanto tempo um DNS slave deve continuar respondendo na ausência de comunicação com o DNS master                            |
 | Negative Cache TTL | Especificação do tempo máximo para as informações mantidas em cache de DNS |
 
 Esses campos estão documentados na [RFC1035](https://tools.ietf.org/html/rfc1035#section-3.3.13);
@@ -216,7 +216,7 @@ dig @::1 pop.fiaplabs.com.br. +short
 
 É comum que se utilize mais de um backend de email para aumentar a disponibilidade de seu serviço, para que isso funcione seu DNS deverá prover algum mecanismo de balanceamento de carga entre todos os apontamentos criados, Por padrão utilizamos a definição de preferência do apontamento do tipo MX, essa configuração está prevista e descrita na [rfc974](https://tools.ietf.org/html/rfc974);
 
-Basicamente cada entrada do tipo MX corresponde a um nome de domínio com dois pedaços de dados, uma refere-se ao valor de preferência (um 16-bit inteiro sem sinal), e o outro refere-se ao nome de um anfitrião, um domínio ou um endereço referente a um backend de email, O número de preferência é usado para indicar em que ordem o serviço de MTA deve tentar entregar a mensagem para os anfitriões MX, sempre do menor para o maior, ou seja, a menor entrada numerada refere-se ao MX s ser usado primeiro. Várias entradas MXs com a mesma preferências são permitidas e têm a mesma prioridade.
+Basicamente cada entrada do tipo MX corresponde a um nome de domínio com dois pedaços de dados, uma refere-se ao valor de preferência (um 16-bit inteiro sem sinal), e o outro refere-se ao nome de um anfitrião, um domínio ou um endereço referente a um backend de email, O número de preferência é usado para indicar em que ordem o serviço de MTA deve tentar entregar a mensagem para os anfitriões MX, sempre do menor para o maior, ou seja, a menor entrada numerada refere-se ao MX s ser usado primeiro. Várias entradas MXs com a mesma preferência são permitidas e têm a mesma prioridade.
 
 Essa configuração deverá ser executada neste formato:
 
@@ -258,7 +258,7 @@ ftp	IN	A	192.168.100.30
 
 ## Balanceamento de requisições com ponteiros SRV
 
-Entradas do tipo SRV são utlizadas em serviços de DNS principalmente por aplicações responsáveis por backends de autenticação de usuários como os protocolos LDAP e Kerberos mas podem ser encotradas em outros protocolos como o NTP e XMPP embora com menor frequencia.
+Entradas do tipo SRV são utilizadas em serviços de DNS principalmente por aplicações responsáveis por backends de autenticação de usuários como os protocolos LDAP e Kerberos, mas podem ser encontradas em outros protocolos como o NTP e XMPP embora com menor frequência.
 
 Basicamente a estrutura de um entrada do tipo SRV é composta da seguinte forma:
 
@@ -273,7 +273,7 @@ Onde:
 - Classe: sempre é IN nesse caso
 - Prioridade: a prioridade para o host de destino, valores menores significam maior preferência.
 - Peso: um peso relativo à entrada com a mesma prioridade
-- Porta: oa porta UDP ou TCP na qual o serviço será encontrado.
+- Porta: a porta UDP ou TCP na qual o serviço será encontrado.
 - Destino: é a entrada do DNS para o host que está provendo o serviço.
 
 Na pratica teriamos algo mais ou menos assim:
