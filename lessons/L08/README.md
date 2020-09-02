@@ -106,10 +106,10 @@ EOF
 
 As linhas acima descrevem o seguinte:
 
-1. A Zona a ser configurada é a zona ***fiaplabs.com.br***, a string ***zone*** declara que inicamos a configuração de uma nova zona;
+1. A Zona a ser configurada é a zona ***fiaplabs.com.br***, a string ***zone*** declara que iniciamos a configuração de uma nova zona;
 2. O tipo de zona escolhido foi ***master*** ou seja, esse será o DNS principal responsável pela zona;
-3. Outros DNS tambem poderão responder por essa zona porem como tipo ***slave***;
-4. O campo file determina onde está o arquivo de zona, o diretório "/var/cache/bind/" é a pasta default para armazenar arquivo de zona cofigurada automaticamente na instalação do bind9, portanto a PATH compelta do arquivo será: "/var/cache/bind/db.fiaplabs.com.br";
+3. Outros DNS também poderão responder por essa zona porem como tipo ***slave***;
+4. O campo file determina onde está o arquivo de zona, o diretório "/var/cache/bind/" é a pasta default para armazenar arquivo de zona configurada automaticamente na instalação do bind9, portanto a PATH completa  do arquivo será: "/var/cache/bind/db.fiaplabs.com.br";
 
 2.4 Configure a zona fiaplabs.com.br copiando o arquivo base entregue na própria documentação do bind9:
 
