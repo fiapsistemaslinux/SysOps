@@ -107,7 +107,7 @@ EOF
 As linhas acima descrevem o seguinte:
 
 1. A Zona a ser configurada é a zona ***fiaplabs.com.br***, a string ***zone*** declara que inicamos a configuração de uma nova zona;
-2. O tipo de zona escolhido foi ***master*** ou seja, esse será o DNS principal resposnável pela zona;
+2. O tipo de zona escolhido foi ***master*** ou seja, esse será o DNS principal responsável pela zona;
 3. Outros DNS tambem poderão responder por essa zona porem como tipo ***slave***;
 4. O campo file determina onde está o arquivo de zona, o diretório "/var/cache/bind/" é a pasta default para armazenar arquivo de zona cofigurada automaticamente na instalação do bind9, portanto a PATH compelta do arquivo será: "/var/cache/bind/db.fiaplabs.com.br";
 
@@ -155,6 +155,8 @@ Com relação aos campos que fazem a composição do arquivo de zona:
 | Retry              | Especificação de tempo para que um servidor configurado como slave realize novamente uma tentativa de solicitação após ocorrer uma falha  |
 | Expire             | Especifica por quanto tempo um DNS slave deve continuar respondendo na auxencia de comunicação com o DNS master                            |
 | Negative Cache TTL | Especificação do tempo máximo para as informações mantidas em cache de DNS |
+
+Esses campos estão documentados na [RFC1035](https://tools.ietf.org/html/rfc1035#section-3.3.13);
 
 2.6 Antes de reiniciar o bind9 faça uma checagem do arquivo de zona: 
 
@@ -212,7 +214,7 @@ dig @::1 pop.fiaplabs.com.br. +short
 
 ## Multiplas entradas para serviços de e-mail
 
-É comum que se utilize mais de um backend de email para aumentar a disponibilidade de seu serviço, para que isso funcione seu DNS deverá prover algum mecanismo de balanceamento de carga entre todos os apontamentos criados, Por padrão utilizamos a definição de preferência do apontamento do tipo MX, essa configuração está prevista e descrita na [rfc974](https://github.com/2TRCR/DNS/blob/master/rfcs/rfc974.txt);
+É comum que se utilize mais de um backend de email para aumentar a disponibilidade de seu serviço, para que isso funcione seu DNS deverá prover algum mecanismo de balanceamento de carga entre todos os apontamentos criados, Por padrão utilizamos a definição de preferência do apontamento do tipo MX, essa configuração está prevista e descrita na [rfc974](https://tools.ietf.org/html/rfc974);
 
 Basicamente cada entrada do tipo MX corresponde a um nome de domínio com dois pedaços de dados, uma refere-se ao valor de preferência (um 16-bit inteiro sem sinal), e o outro refere-se ao nome de um anfitrião, um domínio ou um endereço referente a um backend de email, O número de preferência é usado para indicar em que ordem o serviço de MTA deve tentar entregar a mensagem para os anfitriões MX, sempre do menor para o maior, ou seja, a menor entrada numerada refere-se ao MX s ser usado primeiro. Várias entradas MXs com a mesma preferências são permitidas e têm a mesma prioridade.
 
