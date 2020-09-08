@@ -85,11 +85,11 @@ Na tabela NAT temos o conjunto de regras cuja função é executar o NAT (Networ
 
 - **PREROUTING:** Chain utilizada para alterações de pacotes antes de seu roteamento;
 - **OUTPUT:** Tratamento de pacotes que serão emitidos pelo kernel;
-- **POSTROUTING:** Natuaralmente utilizada quando necessário a alteração de pacotes após seu roteamento;
+- **POSTROUTING:** Utilizada quando necessário a alteração de pacotes após seu roteamento;
 
 ### Tabela MANGLE:
 
-Finalmente na mangle encontraremos regras específicas para funções complexas de tratamento de pacotes, por exemplo, aplicação de TOS.
+Na mangle encontraremos regras específicas para funções complexas de tratamento de pacotes, por exemplo, aplicação de TOS.
 
 ```sh
 # iptables -t mangle -L
@@ -136,8 +136,8 @@ Vamos começar pela prova de conceito sobre as politicas de firewall citadas a p
 # ping 127.0.0.1
 ```
 
-> Verifique que como a politica padrão de entrada passou a ser o Drop de pacotes não podemos mais testar conectividade nem mesmo localmente pois não existe nenhuma regra criada para liberar a comunicação.
-> Ao apostar em uma política restitiva de entrada automaticamente temos a necessidade de criar regras especificas prevendo quais os tipos de pacotes que poderão navegar na rede, neste, tudo que não for expressamente proibido será negado.
+> Verifique que como a política padrão de entrada passou a ser o Drop de pacotes não podemos mais testar conectividade nem mesmo localmente pois não existe nenhuma regra criada para liberar a comunicação.
+> Ao apostar em uma política restritiva de entrada automaticamente temos a necessidade de criar regras especificas prevendo quais os tipos de pacotes que poderão navegar na rede, tudo que não for expressamente proibido será negado.
 
 
  3 - Tendo funcionado o bloqueio anteior vamos a liberção de acesso:
@@ -150,9 +150,9 @@ Vamos começar pela prova de conceito sobre as politicas de firewall citadas a p
 
 > No exemplo acima criamos uma regra de liberação dentro da chain INPUT da tabela filter utilizando a opção "-I" para fazer um insert no topo da tabela ao invés de um Append (opção -A).
 
-Um conceito interessante útil para se aprender iptables (conceito aprendido com a Gabriela Dias) é: "Se você consegue ler uma regra por extenso como se fosse um texto então você realmente a entende", se aplicarmos esse lógica a regra anteior teriamos algo mais ou menos assim:
+Um conceito útil para se aprender sobre iptables (conceito aprendido com a Gabriela Dias) é: "Se você consegue ler uma regra por extenso como se fosse um texto então você realmente a entende", se aplicarmos esse lógica a regra anteior teriamos algo mais ou menos assim:
 
-> **Tudo que entrar na tabela filter, de qualquer origem com protocolo icmpcom destino ao endereço 127.0.0.1 será aceito**
+> **Tudo que entrar na tabela filter, de qualquer origem com protocolo icmp com destino ao endereço 127.0.0.1 será aceito**
 
  4 - Para comprovar a regra descrita acima teste o ping para algum outro endereço que não seja o 127.0.0.1:
 
@@ -163,10 +163,10 @@ Um conceito interessante útil para se aprender iptables (conceito aprendido com
  5 - E se quisessemos liberar a entrada e pacotes para qualquer endereço?
 
 ```sh
-# iptables -t filter -A INPUT -p icmp -s 0/0 -d 0/0 -j ACCEPT
+# iptables -t filter -I INPUT -p icmp -s 0/0 -d 0/0 -j ACCEPT
 # iptables -t filter -nL
-# ping 8.8.8.8
-# ping 127.0.0.1
+# ping 8.8.8.8 -c 3
+# ping 127.0.0.1 -c 3
 ```
 
  6 - Já que liberamos entrada total de pacotes a regra anterior já poderia ser removida, para isso primeiro identifique seu número de ordem dentro do iptables:
@@ -177,6 +177,45 @@ Um conceito interessante útil para se aprender iptables (conceito aprendido com
 # iptables -t filter -nL
 ```
 
+
+
+## A ordem de criação das regras
+
+Nos dois exemplo de introdução anteriores as regras de iptables foram criadas utilizando o parâmetro "-I" para que fossem adicionadas ao topo da tabela, isso ocorreu para que estas regras tiveseem "prioridade" sobre a primeira regras criada no firewal já que que a leitura das regras é **Ordenada de cima para baixo** por exemplo:
+
+Teste a comunicação de saída para a internet no host:
+
+```sh
+curl -i https://api.github.com/orgs/fiapsistemaslinux
+```
+
+> Você deverá obter um retorno 200 e acessar a pi do github.
+
+
+Crie uma regra de bloqueio na saída com destino a porta 80 e 443:
+
+```sh
+iptables -A OUTPUT -p tcp -m multiport --dports 80,443 -j DROP
+```
+
+Teste novamente a comunicação ***Neste caso a saída com destino as porta 80 e 443 estará sendo bloqueada pelo drop de pacotes via iptables***, em seguida crie uma regra de liberação e verifique a posição ela na tabela:
+
+```sh
+iptables -A OUTPUT -p tcp -m multiport --dports 80,443 -j ACCEPT
+iptables -t filter -L OUTPUT -nL --line-numbers
+```
+
+***A nova regra de liberação não funcionará pois existe uma regra de bloqueio acima dela na CHAIN de OUTPUT***
+
+Faça uma nova tentativa de acordo com os comandos abaixo:
+
+```sh
+iptables -I OUTPUT -p tcp -m multiport --dports 80,443 -j ACCEPT
+iptables -t filter -L OUTPUT -nL --line-numbers
+curl -i https://api.github.com/orgs/fiapsistemaslinux
+```
+
+---
 
 ### DUMP de regras criadas "Memory card do iptables"
 
@@ -191,10 +230,9 @@ Existe um comando específico para salvar e outro para recuperar as regras salva
 # cat /tmp/firewall
 ```
 
- 2 - Em seguida remova as regras, altere a policy aplicada:
+ 2 - Em seguida remova as regras:
 
 ```sh
-# iptables -t filter -P INPUT ACCEPT
 # iptables -t filter -F INPUT
 # iptables -t filter -S
 ```
@@ -207,6 +245,7 @@ Existe um comando específico para salvar e outro para recuperar as regras salva
 # iptables-restore < /tmp/firewall
 # iptables -t filter -S
 ```
+
 
 ## Tabelas de referência:
 
