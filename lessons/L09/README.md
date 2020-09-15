@@ -8,6 +8,34 @@ profhelder.pereira@fiap.com.br
 
 > O exemplo abaixo apresenta o passo a passo necessário para construirmos nosso firewall utilizando "apenas" iptables e outros recursos nativos do próprio sistema operacional como systemd e script shell, soluções como PFSense são extremamente úteis pela facilidade, quantidade de recursos e suporte da própria comunidade, mas a idéia aqui é sujar as mãos com o objetivo de evoluir nossa bagagem sobre o assunto.
 
+### Preparação de ambiente:
+
+Para facilitar a execução do Lab altere o hostname dos servidores envolvidos:
+
+Execute a configuração do hostname:
+
+```sh
+echo webserver.fiaplabs.com > /etc/hostname
+hostname -F /etc/hostname
+bash
+```
+
+Para o DNS utilizaremos dois endereços publicos da Google e Cloudflare:
+
+```sh
+cat <<EOF >> /etc/sysconfig/network
+DNS1=8.8.8.8
+DNS2=1.1.1.1
+EOF
+```
+
+Reinicie a configuração de rede e verifique se as alterações foram processadas:
+
+```sh
+systemctl restart network
+dig # Verifique o campo SERVER na saída do comando
+```
+
 ### Habilitando roteamento no Kernel Linux
 
 Em sistemas GNU/Linux chamamos de **ip_forward** a configuração de kernel referente ao encaminhamento de pacotes entre interfaces, esse tipo de recurso é desabilitado por padrão devendo ser modificado manualmente caso necessário, ou seja, em casos onde o sistema operacional deverá trabalhar como roteador de pacotes entre redes.
@@ -21,14 +49,13 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 
 2- Esse modelo de alteração é provisória pois ao próximo reboot o kernel deverá reestabelecer a configuração padrão da compilação, para alterar isso em definitivo o arquivo **/etc/sysctl.conf** deverá ser editado. 
 ```sh
-# cat /etc/sysctl.conf
+cat /etc/sysctl.conf
 ```
 
 3- Dentro do arquivo de configuração verifique se a regra abaixo existe e está descomentada, do contrário crie a regra e execute o comando que segue:
 
 ```sh
-# vim /etc/sysctl.conf
-# net.ipv4.ip_forward=1
+echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
 ```
 
 Após a alteração o comando **"sysctl -p"** fará a releitura deste arquivo, de forma que não seja necessário um rteboot para aplicar a alteração.
@@ -39,19 +66,28 @@ Após a alteração o comando **"sysctl -p"** fará a releitura deste arquivo, d
 
 ### Alterando a policy do firewall:
 
-Analise o trafego de rede e verifique como funciona o ssh para liberarmos conexões antes de alterarmos a policy:
-
-```sh
-# tcpdump -n port 22 
-```
-
-Sabendo quais as portas a serem utilizadas, libere o trafego com destino a porta 22 do firewall:
+Libere o trafego com destino a porta 22 do firewall:
 ```sh
 # iptables -t filter -A INPUT -p tcp --dport 22 -j ACCEPT
 # iptables -t filter -A OUTPUT -p tcp --sport 22 -d 0/0 -j ACCEPT
 ```
 
-> A configuração acima deverá garantir os acessos via ssh mesmo após mudarmos as policys do firewall
+A configuração acima deverá garantir os acessos via ssh mesmo após mudarmos as policys do firewall, PARA EVITAR A PERDA DE ACESSO cheque as configurações antes de proseguir:
+
+```sh
+iptables -S
+```
+
+Você deverá ver um resultado similar as linhas abaixo:
+
+```sh
+[root@webserver ~]# iptables -S
+-P INPUT ACCEPT
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+-A OUTPUT -p tcp -m tcp --sport 22 -j ACCEPT
+```
 
 Altere a policy do firewall para garantir o DROP de pacotes em todas as CHAINS da tabela filter:
 
@@ -59,40 +95,55 @@ Altere a policy do firewall para garantir o DROP de pacotes em todas as CHAINS d
 # iptables -t filter -P INPUT DROP
 # iptables -t filter -P OUTPUT DROP
 # iptables -t filter -P FORWARD DROP
+# iptables -S
 ```
 
 ### Criando regras de configuração de DNS: 
 
+Faça um novo teste com resolução de nomes:
+
+```sh
+dig
+```
+
+**Neste caso o comando deverá retornar um timed out com a mensagem: "no servers could be reached" após alguns segundos
+
 Crie as regras conforme abaixo para outgoing de DNS:
 ```sh
 # iptables -t filter -A INPUT -p udp --sport 53 -d 0/0 -j ACCEPT
-# iptables -t filter -A INPUT -p udp -s 127.0.0.53 -j ACCEPT
 # iptables -t filter -A OUTPUT -p udp -s 0/0 --dport 53 -j ACCEPT
-# iptables -t filter -A OUTPUT -p udp -d 127.0.0.53 -j ACCEPT
 ```
 
-E se fosse necessário liberar apenas com base na interface eth0?
+Teste novamente o processo de resolução de nomes:
 
 ```sh
-# iptables -t filter -A INPUT -p udp --sport 53 -d 0/0 -i eth0 -j ACCEPT
+dig +short
 ```
+
+> E se fosse necessário liberar apenas com base na interface eth0? Poderiamos utilizar a seguinte abordagem: iptables -t filter -A INPUT -p udp --sport 53 -d 0/0 -i eth0 -j ACCEPT
 
 ### Regras de configuração de acesso a porta 80 e 443:
 
-É possível criar regras que se apliquem a mais de uma porta sem que seja necessário executar dois comandos diferentes no iptables, para esta finalidade utilizamos o parâmetro "-m":
+```sh
+curl -i https://api.github.com
+```
+
+***Você deverá obter um timeout nesta requisição"
+
+Para corriger isso liberaremos o acesso nas portas 80 e 443, é possível criar regras que se apliquem a mais de uma porta sem que seja necessário executar dois comandos diferentes no iptables, para esta finalidade utilizamos o parâmetro "-m":
 
 ```sh
 # iptables -t filter -A OUTPUT -p tcp -m multiport -d 0/0 --dport 80,443 -j ACCEPT
 # iptables -t filter -A INPUT -p tcp -m multiport --sport 80,443 -j ACCEPT
 ```
 
-> O parametro **-m** ou **--match** é utilizado para criar um condição de aplicação para a regra a partir de um módulo do iptables como connect, state ou multiport, ou seja a regra passa a depender, neste caso a condição utiliza o módulo multiport, para habilitar especificação de mais de uma porta na mesma regra, neste exemplos as portas 80 e 443.
-
-Faça um teste executando novamente o yum update:
+Teste novamente o acesso da instância a internet utilizando o yum makecache que tentará atualizar o cache de repositórios disponíveis:
 
 ```sh
-# apt update
+yum makecache
 ```
+
+> O parametro **-m** ou **--match** é utilizado para criar um condição de aplicação para a regra a partir de um módulo do iptables como connect, state ou multiport, ou seja a regra passa a depender, neste caso a condição utiliza o módulo multiport, para habilitar especificação de mais de uma porta na mesma regra, neste exemplos as portas 80 e 443.
 
 ### Liberando icmp com base no icmp-type do pacote:
 
@@ -119,51 +170,6 @@ Caso ache interessante você pode criar um novo conjunto de regras liberando icm
 # iptables -t filter -A INPUT -p icmp -s 172.31.0.0/20 -j ACCEPT
 # iptables -t filter -A OUTPUT -p icmp -d 172.10.0.0/24 -j ACCEPT
 # iptables -t filter -A INPUT -p icmp -s 172.10.0.0/24 -j ACCEPT
-```
-
-## MASQUERADE de pacotes e configuração de forward:
-
-Configure a tabela NAT para executar o masquerade nos pacotes destinados a rede interna:
-
-```sh
-# iptables -t nat -A POSTROUTING -s 172.10.0.0/24  -d 0/0 -j MASQUERADE
-```
-
-A configuração acima apenas habilitou o MASQUERADE de pacotes utilizando nat, entretanto esses pacotes ainda terão de passar pelo firewall, consideando que nossa politica de firewall é restritiva a passagem de pacotes em si terá de ser liberada:
-
-```sh
-# iptables -t filter -A FORWARD -p tcp -m multiport -s 172.10.0.0/24 -d 0/0 --dport 80,443 -j ACCEPT
-# iptables -t filter -A FORWARD -p tcp -m multiport -s 0/0 --sport 80,443 -d 172.10.0.0/24 -j ACCEPT
-```
-
-Não se esqueça das regras para liberação de acesso a porta 53:
-```sh
-# iptables -t filter -A FORWARD -p udp -s 172.10.0.0/24 -d 0/0 --dport 53 -j ACCEPT
-# iptables -t filter -A FORWARD -p udp -s 0/0 --sport 53 -d 172.10.0.0/24 -j ACCEPT
-```
-
-## Redireciomento de portas utilizando DNAT
-
-A ação DNAT é utilizada no iptables para redirecionamento de portas de conexão, com execução de mascaramento nat, no exemplo abaixo executamos o redirecionamento de conexões de uma porta alta do firewall para a porta 22 de um dos hosts de destino.
-
-```sh
-# iptables -t nat -A POSTROUTING -s 172.10.0.0/24  -d 0/0 -j MASQUERADE
-# iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 22000 -j DNAT --to <IP_INSTANCIA_BACKED>
-```
-
-> No exemplo acima liberamos o PREROUTING de conexões tcp na interface reservada para ssh, utilizando a ação DNAT responsável por executar um redirecionamento de portas dentro da tabela nat, ou seja, com masquerade redirecionamos a conexão recebida na porta alta para a porta 22 de um host de destino.
-
-Como a politica do firewall é o DROP das regras de forward, precisaremos liberar a passagem de pacotes pelo firewall:
-
-```sh
-# iptables -t filter -A FORWARD -p tcp -m iprange --dst-range 172.10.0.1-172.10.0.254 --dport 22 -j ACCEPT
-# iptables -t filter -A FORWARD -p tcp -m iprange --src-range 172.10.0.1-172.10.0.254 --sport 22 -j ACCEPT 
-```
-
-Para testar faça um acesso remoto ao endereço do webserver especificando a porta alta 22000 usada na regra:
-
-```sh
-# ssh -l aluno <IP_WEBSERVER> -p 22000
 ```
 
 ## Configurando as regras necessárias para pacotes "comuns" na rede:
