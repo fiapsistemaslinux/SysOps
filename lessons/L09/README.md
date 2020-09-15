@@ -36,34 +36,6 @@ systemctl restart network
 dig # Verifique o campo SERVER na saída do comando
 ```
 
-### Habilitando roteamento no Kernel Linux
-
-Em sistemas GNU/Linux chamamos de **ip_forward** a configuração de kernel referente ao encaminhamento de pacotes entre interfaces, esse tipo de recurso é desabilitado por padrão devendo ser modificado manualmente caso necessário, ou seja, em casos onde o sistema operacional deverá trabalhar como roteador de pacotes entre redes.
-
-
-1- Para ativarmos esse recurso altere a configuração do kernel para o arquivo **/proc/sys/net/ipv4/ip_forward:**
-```sh
-cat /proc/sys/net/ipv4/ip_forward
-echo 1 > /proc/sys/net/ipv4/ip_forward
-```
-
-2- Esse modelo de alteração é provisória pois ao próximo reboot o kernel deverá reestabelecer a configuração padrão da compilação, para alterar isso em definitivo o arquivo **/etc/sysctl.conf** deverá ser editado. 
-```sh
-cat /etc/sysctl.conf
-```
-
-3- Dentro do arquivo de configuração verifique se a regra abaixo existe e está descomentada, do contrário crie a regra e execute o comando que segue:
-
-```sh
-echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
-```
-
-Após a alteração o comando **"sysctl -p"** fará a releitura deste arquivo, de forma que não seja necessário um rteboot para aplicar a alteração.
-
-```sh
-# sysctl -p
-```
-
 ### Alterando a policy do firewall:
 
 Libere o trafego com destino a porta 22 do firewall:
