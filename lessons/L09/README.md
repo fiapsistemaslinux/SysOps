@@ -97,7 +97,7 @@ dig +short
 ### Regras de configuração de acesso a porta 80 e 443:
 
 ```sh
-curl -i https://api.github.com
+curl -i https://api.github.com -m 3
 ```
 
 ***Você deverá obter um timeout nesta requisição"
