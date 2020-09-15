@@ -143,13 +143,13 @@ Caso ache interessante você pode criar um novo conjunto de regras liberando icm
 # iptables -t filter -A INPUT -p icmp -s 172.31.0.0/20 -j ACCEPT
 ```
 
-## Configurando as regras necessárias para pacotes "comuns" na rede:
+## Configurando as regras necessárias para FTP:
 
 Geralmente alguns conjuntos de pacotes tendem a ser liberados por serem de uso comum por parte dos usuarios, em nosso exemplo vamos liberar o trafego nas portas de e-mail e ftp:
 
 ```sh
-# iptables -A OUTPUT -p tcp --sport 1024:65535 -m multiport --dports 20,21 -j ACCEPT -m comment --comment "Lberar FTP"
-# iptables -A INPUT -p tcp --dport 1024:65535 -m multiport --sports 20,21 -j ACCEPT -m comment --comment "Lberar FTP"
+# iptables -A OUTPUT -p tcp --sport 1024:65535 -m multiport --dports 20,21 -j ACCEPT -m comment --comment "Liberar FTP"
+# iptables -A INPUT -p tcp --dport 1024:65535 -m multiport --sports 20,21 -j ACCEPT -m comment --comment "Liberar FTP"
 ```
 
 Para testar essas liberações tente conectar a partir do servidor no ftp da unicamp:
