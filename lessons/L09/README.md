@@ -100,7 +100,7 @@ dig +short
 curl -i https://api.github.com -m 3
 ```
 
-***Você deverá obter um timeout nesta requisição"
+***Você deverá obter um timeout nesta requisição"***
 
 Para corriger isso liberaremos o acesso nas portas 80 e 443, é possível criar regras que se apliquem a mais de uma porta sem que seja necessário executar dois comandos diferentes no iptables, para esta finalidade utilizamos o parâmetro "-m":
 
@@ -112,6 +112,7 @@ Para corriger isso liberaremos o acesso nas portas 80 e 443, é possível criar 
 Teste novamente o acesso da instância a internet utilizando o yum makecache que tentará atualizar o cache de repositórios disponíveis:
 
 ```sh
+curl -i https://api.github.com -m 3
 yum makecache
 ```
 
@@ -140,8 +141,6 @@ Caso ache interessante você pode criar um novo conjunto de regras liberando icm
 ```sh
 # iptables -t filter -A OUTPUT -p icmp -d 172.31.0.0/20 -j ACCEPT
 # iptables -t filter -A INPUT -p icmp -s 172.31.0.0/20 -j ACCEPT
-# iptables -t filter -A OUTPUT -p icmp -d 172.10.0.0/24 -j ACCEPT
-# iptables -t filter -A INPUT -p icmp -s 172.10.0.0/24 -j ACCEPT
 ```
 
 ## Configurando as regras necessárias para pacotes "comuns" na rede:
@@ -149,38 +148,33 @@ Caso ache interessante você pode criar um novo conjunto de regras liberando icm
 Geralmente alguns conjuntos de pacotes tendem a ser liberados por serem de uso comum por parte dos usuarios, em nosso exemplo vamos liberar o trafego nas portas de e-mail e ftp:
 
 ```sh
-# iptables -A FORWARD -p tcp -s 192.168.1.0/24 --sport 1024:65535 -m multiport --dports 20,21 -j ACCEPT
-# iptables -A FORWARD -p tcp -d 192.168.1.0/24 --dport 1024:65535 -m multiport --sports 20,21 -j ACCEPT
+# iptables -A OUTPUT -p tcp --sport 1024:65535 -m multiport --dports 20,21 -j ACCEPT -m comment --comment "Lberar FTP"
+# iptables -A INPUT -p tcp --dport 1024:65535 -m multiport --sports 20,21 -j ACCEPT -m comment --comment "Lberar FTP"
 ```
 
-Para testar essas liberações tente conectar a partir do servidor de email no ftp da unicamp:
+Para testar essas liberações tente conectar a partir do servidor no ftp da unicamp:
 
 ```sh
 # ftp
 > open ftp.unicamp.br 
 ```
 
-Liberar as portas para os protocolos pop e imap, geralmente usuários utilizam essas portas para conexão com serviços de email externos utilizando app mobile ou outlook:
-
-```sh
-# iptables -A FORWARD -p tcp -s 192.168.1.0/24 --sport 1024:65535 -m multiport --dports 110,995,143,993 -j ACCEPT -m comment --comment "Lberar imap e pop"
-# iptables -A FORWARD -p tcp -d 192.168.1.0/24 --dport 1024:65535 -m multiport --sports 110,995,143,993 -j ACCEPT -m comment --comment "Liberar imap e pop"
-```
+***Após o teste você receberá um retorno 220 do servidor da Unicamp, neste momento cancele a requisição com Ctrl+D***
 
 > As duas regras criadas acima utilizaram comentarios através do match "comment", o comentario inserido torna-se parte da regra, útil para facilitar processos de troubleshooting em regras especificas.
 
 ## Implementando controle de status de conexão no firewall:
 
-Para testarmos o conceito de análise de estado de conexão de pacotes, utilizaremos o módulo ***state***, com um exemplo simples: Liberar o servidor proxy para outgoing de ssh:
+Para testarmos o conceito de análise de estado de conexão de pacotes, utilizaremos o módulo ***state***, com um exemplo simples: Liberar o servidor para outgoing de ssh:
 
 ```sh
 # iptables -t filter -A OUTPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
 # iptables -t filter -A INPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
 ```
 
-> Na regra de outgoing ( OUTPUT ) criada acima aceitamos a ***saída*** de qualquer pacote sob os estados ***NEW*** e ***ESTABLISHED*** com destino a porta 22, ou seja, pacotes que já estabeleceram uma conexão e pacotes novos com destino a porta que por padrão é usada para ssh serão permitidos.
+> Na regra de outgoing (OUTPUT) criada acima aceitamos a ***saída*** de qualquer pacote sob os estados ***NEW*** e ***ESTABLISHED*** com destino a porta 22, ou seja, pacotes que já estabeleceram uma conexão e pacotes novos com destino a porta que por padrão é usada para ssh serão permitidos.
 
-> Na regra de incoming ( INPUT ) criada acima aceitados a ***entrada*** de qualquer pacote sob o estado ***ESTABLISHED***, vindo da porta 22 de qualquer origem, repare que a regra NÃO contempla tentativas de conexões no firewall uma vez que só pacotes de conexões já estabelecidas são aceitos, eis um exemplo onde o uso do controle de pacotes por estado aumenta a eficiẽncia do controle executado via iptables.
+> Na regra de incoming (INPUT) criada acima aceitados a ***entrada*** de qualquer pacote sob o estado ***ESTABLISHED***, vindo da porta 22 de qualquer origem, repare que a regra NÃO contempla tentativas de conexões no servidor uma vez que só pacotes de conexões já estabelecidas são aceitos, eis um exemplo onde o uso do controle de pacotes por estado aumenta a eficiẽncia do controle executado via iptables.
 
 
 ## Configurando inicialização automatica do firewall
