@@ -4,3 +4,6 @@ lessons/L10/terraform/network/.terraform/terraform.tfstate
 lessons/L10/terraform/instances/.terraform
 lessons/L10/terraform/instances/.terraform/plugins
 lessons/L10/terraform/instances/.terraform/terraform.tfstate
+lessons/L10/terraform/instances/state
+lessons/L10/terraform/instances/state/terraform.tfstate
+lessons/L10/terraform/instances/state/terraform.tfstate.backup
